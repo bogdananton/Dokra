@@ -101,9 +101,7 @@ class WSDL implements FromInterface
         foreach ($methods as $j => $message) {
             $name = trim($message->attributes()->name);
 
-            $object = new \stdClass;
-            $object->name = $name;
-            $object->parts = [];
+            $methodParams = [];
 
             foreach ($message->part as $part) {
                 $partName = trim($part->attributes()->name);
@@ -114,9 +112,9 @@ class WSDL implements FromInterface
                 $partObject->isBasic = $this->isBasicType($partType);
                 $partObject->isNull = $this->isNullMessagePart($part);
 
-                $object->parts[] = $partObject;
+                $methodParams[$partName] = $partObject;
             }
-            $response[] = $object;
+            $response[$name] = $methodParams;
         }
         return $response;
     }
@@ -202,7 +200,7 @@ class WSDL implements FromInterface
 
                 $extendsObject = (object)[
                     'type' => $this->getTypeString($extendsObjectNameString),
-                    'isCustom' => !$this->isBasicType($extendsObjectNameString)
+                    'isBasic' => $this->isBasicType($extendsObjectNameString)
                 ];
 
             }
@@ -233,8 +231,8 @@ class WSDL implements FromInterface
 
                         $response[$elementName] = (object)[
                             // 'name' => $elementName,
-                            'label' => $elementRawType->label,
-                            'isCustom' => $elementRawType->isCustom,
+                            'type' => $elementRawType->label,
+                            'isBasic' => !$elementRawType->isCustom,
                             'isNillable' => $isNillable
                         ];
                     }

@@ -3,6 +3,7 @@ namespace Dokra\import;
 
 use Dokra\assets\InterfaceFileEntry;
 use Dokra\base\RegistryT;
+use Dokra\base\Disk;
 use Dokra\import\from\FromInterface;
 use Dokra\import\from\PHP;
 use Dokra\import\from\WSDL;
@@ -79,11 +80,16 @@ class Importer
     {
         $allFiles = $this->config()->get('project.files');
 
-        $filterFiles = array_filter($allFiles, function ($filePath) use ($extension) {
-            return (bool)preg_match('/\.' . $extension . '$/i', $filePath);
-        });
-
-        return $filterFiles;
+        foreach ($allFiles as $index => $filePath) {
+            if (Disk::getExtension($filePath) != $extension) {
+                unset($allFiles[$index]);
+            }
+        }
+        return $allFiles;
+//        $filterFiles = array_filter($allFiles, function ($filePath) use ($extension) {
+//            return (bool)preg_match('/\.' . $extension . '$/i', $filePath);
+//        });
+//        return $filterFiles;
     }
 
     protected function transformEndpointName($endpoint)

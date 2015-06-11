@@ -37,11 +37,12 @@ class Dokra
         foreach ($this->tasks as $task) {
             switch ($task) {
                 case 'output.cache':
-                    $this->taskOutputCache();
+                    $this->logCache('structure.wsdl', $this->interfaces);
                     break;
 
                 case 'diff.wsdl':
-                    $this->differ->wsdlVersionChanges->from($this->interfaces->wsdl)->run();
+                    $results = $this->differ->wsdlVersionChanges->from($this->interfaces->wsdl)->run();
+                    $this->logCache('diff.wsdl', $results);
                     break;
             }
         }
@@ -61,11 +62,11 @@ class Dokra
         $this->config()->set('project.files', $files);
     }
 
-    protected function taskOutputCache()
+    protected function logCache($file, $data)
     {
         file_put_contents(
-            $this->config()->get('cache.temporary') . '/output.json',
-            json_encode($this->interfaces, JSON_PRETTY_PRINT)
+            $this->config()->get('cache.temporary') . '/' . $file . '.json',
+            json_encode($data, JSON_PRETTY_PRINT)
         );
     }
 }

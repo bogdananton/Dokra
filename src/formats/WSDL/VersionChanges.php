@@ -1,10 +1,11 @@
 <?php
-namespace Dokra\diff;
+namespace Dokra\formats\WSDL;
 
-class WSDLVersionChanges
+class VersionChanges
 {
     protected $entries;
     protected $hashMaps = [];
+    protected $htmlReport = "";
 
     public function from($wsdlInterfaces)
     {
@@ -16,7 +17,285 @@ class WSDLVersionChanges
     {
         $this->makeInterfacesHashMapsIndexes();
         $this->extractAllChanges();
+        $this->createHTML();
 
+        return $this;
+    }
+
+    protected $currentVersion;
+    protected $currentEndpoint;
+
+    protected function getPreviousVersion()
+    {
+        $previousVersion = null;
+        if (isset($this->hashMaps[$this->currentEndpoint])) {
+            foreach ($this->hashMaps[$this->currentEndpoint] as $version => $entry) {
+                if ($version == $this->currentVersion) {
+                    break;
+                }
+                $previousVersion = $version;
+            }
+        }
+        return $previousVersion;
+    }
+
+    protected function getPreviousWSDL()
+    {
+        $previousVersion = $this->getPreviousVersion();
+        if (!is_null($previousVersion)) {
+            return $this->getWSDL($this->currentEndpoint, $previousVersion);
+        }
+    }
+
+    protected function getCurrentWSDL()
+    {
+        return $this->getWSDL($this->currentEndpoint, $this->currentVersion);
+    }
+
+    protected function createHTML()
+    {
+        $html = "";
+
+        foreach ($this->hashMaps as $endpoint => $endpointEntry) {
+            $endpointString = str_replace(' ', '-', ucwords(strtolower(str_replace(['-', '_'], ' ', $endpoint))));
+
+            foreach ($endpointEntry as $version => $endpointItemChanges) {
+                if (is_null($endpointItemChanges)) {
+                    continue; // ignore first version
+                }
+
+                $html .= "# " . $endpointString . ' ' . $version . " WSDL\n\n";
+
+                $this->currentVersion = $version;
+                $this->currentEndpoint = $endpoint;
+
+                foreach ($endpointItemChanges as $changeGroup => $changes) {
+                    $changeGroupLabel = "## " . ucfirst(strtolower(implode(" ", preg_split('/(?=[A-Z])/', $changeGroup))));
+
+                    if (is_array($changes) && is_string(end($changes)) && !empty($changes)) {
+                        // listing
+                        $html .= $changeGroupLabel . ":\n- " . implode("\n- ", $changes) . "\n\n";
+
+                    } else if (!is_null($changes)) {
+                        $html .= $changeGroupLabel . ":\n\n";
+                        $count = 0;
+                        foreach ($changes as $methodName => $methodChanges) {
+                            $count++;
+                            $indexLiteral = 'a';
+                            $html .= $count . "). Method " . $methodName . ":\n";
+
+                            foreach ($methodChanges as $methodChange) {
+                                $html .= "\n" . $indexLiteral . "). " . $methodChange->changeType . " on " . $methodChange->messageType . "\n";
+                                $html .= $this->getSignatureChangeHTML($methodChange);
+                                $indexLiteral++;
+                            }
+                            $html .= "\n\n";
+                        }
+                    }
+                }
+                $html .= "\n\n";
+            }
+        }
+
+        $this->htmlReport = $html;
+    }
+
+    protected function getSignatureChangeHTMLInputStructure($methodChange)
+    {
+        $return = "";
+
+        if (isset($methodChange->added) && !empty($methodChange->added)) {
+            foreach ($methodChange->added as $parameterPosition => $parameterName) {
+                if (isset($methodChange->removed) && isset($methodChange->removed[$parameterPosition])) {
+                    $return .= "Parameter [" . $parameterName . "] replaced [" . $methodChange->removed[$parameterPosition] . "] on position " . ($parameterPosition + 1) . ".\n";
+
+                } else {
+                    $return .= "Parameter [" . $parameterName . "] was added on position " . ($parameterPosition + 1) . ".\n";
+                }
+            }
+        }
+
+        if (isset($methodChange->removed) && !empty($methodChange->removed)) {
+            foreach ($methodChange->removed as $parameterPosition => $parameterName) {
+                if (!in_array($parameterName, $methodChange->added) && !isset($methodChange->added[$parameterPosition])) {
+                    $return .= "Parameter [" . $parameterName . "] was removed; was found at position " . ($parameterPosition + 1) . ".\n";
+                }
+            }
+        }
+
+        if (isset($methodChange->parameters) && !empty($methodChange->parameters)) {
+            foreach ($methodChange->parameters as $position => $parameterName) {
+                if (isset($methodChange->diffParameterStructure) && isset($methodChange->diffParameterStructure[$position])) {
+                    $structure = $methodChange->diffParameterStructure[$position];
+                    $methodChangeNew = new \stdClass;
+                    $methodChangeNew->structure = [$structure];
+
+                    $extraDetails = $this->getSignatureChangeHTMLOutputStructure($methodChangeNew);
+                    $extraDetails = trim($extraDetails);
+
+                    if (!empty($extraDetails)) {
+                        $extraDetails = "  " . implode("\n  ", explode("\n", $extraDetails));
+                        $extraDetails = "Parameter [" . $parameterName . "] has changed:\n" . $extraDetails;
+                        $return .= $extraDetails;
+                    }
+                }
+            }
+        }
+
+        return $return;
+    }
+
+    protected function getSignatureChangeHTMLOutputStructure($methodChange)
+    {
+        $return = "";
+
+        $structure = (object)$methodChange->structure[0];
+
+        $structure = clone($structure);
+        if (isset($structure->current)) {
+            if (is_array($structure->current) != is_array($structure->previous)) {
+                if (is_array($structure->current)) {
+                    $return .= "The method returned an array and now it doesn't.\n";
+                } else {
+                    $return .= "The method didn't returned an array of objects and now it does.\n";
+                }
+                return $return;
+            } else {
+                if (is_array($structure->current)) {
+                    if (count($structure->current) > 1) {
+                        print_r($structure->current);
+                        die("More than one current structure array item.");
+                    }
+                    $structure->current = $structure->current[0];
+                }
+                if (is_array($structure->previous)) {
+                    if (count($structure->previous) > 1) {
+                        print_r($structure->previous);
+                        die("More than one previous structure array item.");
+                    }
+                    $structure->previous = $structure->previous[0];
+                }
+            }
+        }
+
+        if (isset($structure->current) && (is_array($structure->current) || is_object($structure->current))) {
+            $addedKeys = array_diff(array_keys((array)$structure->current), array_keys((array)$structure->previous));
+            $removedKeys = array_diff(array_keys((array)$structure->previous), array_keys((array)$structure->current));
+
+            if (!empty($addedKeys)) {
+                $return .= "Added attribute key" . (count($addedKeys) > 1 ? 's' : '') . ": " . implode(", ", $addedKeys) . "\n";
+            }
+
+            if (!empty($removedKeys)) {
+                $return .= "Removed attribute key" . (count($removedKeys) > 1 ? 's' : '') . ": " . implode(", ", $removedKeys) . "\n";
+            }
+
+            $nowNillable = [];
+            $nowMandatory = [];
+
+            foreach ($structure->current as $key => $currentStructure) {
+                if (isset($structure->previous->{$key})) {
+                    $previousWSDL = $this->getPreviousWSDL();
+                    $currentWSDL = $this->getCurrentWSDL();
+
+                    if ($previousWSDL && $currentWSDL) {
+                        $currentStructureDetail = $this->getParameterStructure($currentStructure, $currentWSDL);
+
+                        $previousStructure = $structure->previous->{$key};
+                        $previousStructureDetail = $this->getParameterStructure($previousStructure, $previousWSDL);
+
+//                        var_dump($currentStructure);
+//                        var_dump($previousStructure);
+//                        var_dump($currentStructureDetail);
+//                        var_dump($previousStructureDetail);
+//                        die();
+
+                        if ($currentStructure->isNillable != $previousStructure->isNillable) {
+                            if ($currentStructure->isNillable) {
+                                $nowNillable[] = $key;
+                            } else {
+                                $nowMandatory[] = $key;
+                            }
+                        }
+
+                        if ($currentStructureDetail != $previousStructureDetail) {
+                            $return .= "The structure for the [" . $key . "] attribute has changed.";
+
+                            if (is_scalar($currentStructureDetail) && is_scalar($previousStructureDetail)) {
+                                $return .= " Current type is [" . $currentStructureDetail . "], previous type was [" . $previousStructureDetail . "].";
+                            }
+
+                            $return .= "\n";
+                        }
+                    } else {
+                        var_dump($this->currentEndpoint . ' ' . $this->currentVersion);
+                        var_dump($this->getPreviousVersion());
+                        die();
+                    }
+                } else {
+                    // was added so no structure change check is required
+                }
+            }
+
+            if (!empty($nowNillable)) {
+                $return .= "The " . implode(', ', $nowNillable) . ' attribute key' . (count($nowNillable) > 1 ? 's are' : ' is') . " now nillable.\n";
+            }
+
+            if (!empty($nowMandatory)) {
+                $return .= "The " . implode(', ', $nowMandatory) . ' attribute key' . (count($nowMandatory) > 1 ? 's are' : ' is') . " now mandatory.\n";
+            }
+
+        } else {
+            // @todo catch this
+//            print_r($structure);
+        }
+
+//        die();
+
+        return $return;
+    }
+
+    protected function getSignatureChangeHTML($methodChange)
+    {
+        $response = null;
+
+        if ($methodChange->messageType == 'output') {
+            switch ($methodChange->changeType) {
+                default:
+                case 'parameter structure changed':
+                    $response = $this->getSignatureChangeHTMLOutputStructure($methodChange);
+//                    print_r($methodChange);
+                    break;
+            }
+        } else if ($methodChange->messageType == 'input') {
+            switch ($methodChange->changeType) {
+                default:
+                case 'parameter structure changed':
+                case 'different parameter names';
+                case 'different parameter count':
+                    $response = $this->getSignatureChangeHTMLInputStructure($methodChange);
+//                    print_r($methodChange);
+                    break;
+            }
+        }
+
+        $response = trim($response);
+        if (empty($response)) {
+            return print_r($methodChange, 2);
+        } else {
+            $response .= "\n";
+        }
+
+        return $response;
+    }
+
+    public function getHTML()
+    {
+        return $this->htmlReport;
+    }
+
+    public function getJSON()
+    {
         return $this->hashMaps;
     }
 
@@ -28,15 +307,11 @@ class WSDLVersionChanges
             foreach ($endpointDetails as $v => $hashMapEntry) {
                 if (!is_null($previousVersionHashMapIndex)) {
                     $currentVersionHashMapIndex = $this->hashMaps[$ep][$v]->index;
-
                     $currentWSDL = $this->entries[$currentVersionHashMapIndex];
                     $previousWSDL = $this->entries[$previousVersionHashMapIndex];
-
-                    // hack below --v
                     $this->hashMaps[$ep][$v] = $this->extractItemChanges($currentWSDL, $previousWSDL);
                 } else {
-                    unset($this->hashMaps[$ep][$v]);
-                    // end hack --^
+                    $this->hashMaps[$ep][$v] = null; // will be used only for previous
                 }
 
                 $previousVersionHashMapIndex = $hashMapEntry->index;
@@ -67,11 +342,9 @@ class WSDLVersionChanges
     {
         $changes = new \stdClass();
 
-//        $changes->methodsAdded = $this->extractItemChangesMethodsAddedOrRemoved($currentWSDL, $previousWSDL);
-//        $changes->methodsRemoved = $this->extractItemChangesMethodsAddedOrRemoved($previousWSDL, $currentWSDL);
+        $changes->methodsAdded = $this->extractItemChangesMethodsAddedOrRemoved($currentWSDL, $previousWSDL);
+        $changes->methodsRemoved = $this->extractItemChangesMethodsAddedOrRemoved($previousWSDL, $currentWSDL);
         $changes->methodsSignatureChanges = $this->extractItemChangesMethodSignatures($currentWSDL, $previousWSDL);
-//        $changes->methodsOutputResponse = null;
-//        $changes->methodsInputResponse = null;
 //        $changes->objectsAdded = null;
 //        $changes->objectsRemoved = null;
 //        $changes->objectsChanged = null;
@@ -242,6 +515,18 @@ class WSDLVersionChanges
         }
 
         throw new \Exception("The [" . $structure->type . "] complex type was not found for the WSDL file [" . $wsdl->source->filePath . "].");
+    }
+
+    protected function getWSDL($endpoint, $version)
+    {
+        foreach ($this->entries as $index => $entry) {
+            $entryVersion = $entry->source->version;
+            $entryEndpoint = $entry->source->endpoint;
+
+            if ($endpoint == $entryEndpoint && $version == $entryVersion) {
+                return $entry;
+            }
+        }
     }
 
     protected function makeInterfacesHashMapsIndexes()

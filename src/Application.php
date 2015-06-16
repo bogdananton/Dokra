@@ -1,36 +1,98 @@
 <?php
-namespace Dokra\import;
+namespace Dokra;
 
-use Dokra\assets\InterfaceFileEntry;
-use Dokra\base\RegistryT;
+use Dokra\assets\APIFileEntry;
+use Dokra\assets\ImporterInterface;
 use Dokra\base\Disk;
-use Dokra\import\from\FromInterface;
-use Dokra\import\from\PHP;
-use Dokra\import\from\WSDL;
 
-class Importer
+class Application
 {
-    use RegistryT;
+    use base\RegistryT;
+
+    protected $tasks = [];
+    protected $interfaces;
 
     public function __construct()
     {
-        $this->importWSDL = new WSDL();
-        $this->importPHP = new PHP();
+        $this->disk = new Disk();
+        $this->importWSDL = new formats\WSDL\Importer();
+        $this->importPHP = new formats\PHP\Importer();
+
+        $this->differ = new \stdClass();
+        $this->differ->wsdlVersionChanges = new formats\WSDL\VersionChanges();
+
+        $this->interfaces = (object)[
+            'wsdl' => [],
+            'php' => []
+        ];
+    }
+
+    public function run()
+    {
+        $this->indexProjectFiles();
+
+        $this->interfaces->wsdl = $this->getWSDLs();
+        $this->interfaces->php = $this->getPHPs();
+
+        $this->processTasks();
+    }
+
+    protected function processTasks()
+    {
+        foreach ($this->tasks as $task) {
+            switch ($task) {
+                case 'output.cache':
+                    $this->logCache('structure.wsdl.json', $this->interfaces);
+                    break;
+
+                case 'diff.wsdl':
+                    $differWSDL = $this->differ->wsdlVersionChanges->from($this->interfaces->wsdl)->run();
+                    $this->logCache('diff.wsdl.json', $differWSDL->getJSON());
+                    $this->logCache('diff.wsdl.html', $differWSDL->getHTML(), false);
+                    break;
+            }
+        }
+    }
+
+    public function registerTask($taskCode)
+    {
+        $this->tasks[] = $taskCode;
+    }
+
+    protected function indexProjectFiles()
+    {
+        // extract array of file paths for all PHP and WSDL files
+        $projectPath = $this->config()->get('project.path');
+        $files = $this->disk->getFiles($projectPath);
+
+        $this->config()->set('project.files', $files);
+    }
+
+    protected function logCache($file, $data, $isJSON = true)
+    {
+        file_put_contents(
+            $this->config()->get('cache.temporary') . '/' . $file,
+            ($isJSON ? json_encode($data, JSON_PRETTY_PRINT) : $data)
+        );
     }
 
     public function getWSDLs()
     {
         $files = $this->getFilesByExtension('wsdl');
+        $this->config()->set('wsdl.files', $files);
+
         return $this->processFromFiles($files, $this->importWSDL);
     }
 
     public function getPHPs()
     {
         $files = $this->getFilesByExtension('php');
+        $this->config()->set('php.files', $files);
+
         return $this->processFromFiles($files, $this->importPHP);
     }
 
-    protected function processFromFile($filePath, FromInterface $importer)
+    protected function processFromFile($filePath, ImporterInterface $importer)
     {
         foreach ($this->getFilePattern($importer) as $pattern => $matchingKeys) {
             preg_match($pattern, $filePath, $matches);
@@ -47,7 +109,7 @@ class Importer
 
                     $endpoint = $this->transformEndpointName($endpoint);
 
-                    $fileEntry = new InterfaceFileEntry($importer::ID, $filePath, $version, $endpoint);
+                    $fileEntry = new APIFileEntry($importer::ID, $filePath, $version, $endpoint);
                     $interfaceEntry = $importer->convertFile($fileEntry);
 
                     return $interfaceEntry;

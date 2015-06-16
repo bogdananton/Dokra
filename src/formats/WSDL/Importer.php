@@ -1,15 +1,16 @@
 <?php
-namespace Dokra\import\from;
+namespace Dokra\formats\WSDL;
 
-use Dokra\assets\InterfaceFileEntry;
+use Dokra\assets\APIFileEntry;
+use Dokra\assets\ImporterInterface;
 
-class WSDL implements FromInterface
+class Importer implements ImporterInterface
 {
     const ID = 'wsdl';
     protected $xml;
     protected $issues = [];
 
-    public function convertFile(InterfaceFileEntry $interfaceFileEntry)
+    public function convertFile(APIFileEntry $interfaceFileEntry)
     {
         if ($this->load($interfaceFileEntry->filePath)) {
             $response = new \stdClass;

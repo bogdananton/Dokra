@@ -1,7 +1,7 @@
 <?php
 namespace Dokra\assets;
 
-class InterfaceFileEntry
+class APIFileEntry
 {
     public $type;
     public $filePath;
@@ -12,7 +12,7 @@ class InterfaceFileEntry
     {
         $this->type = strtoupper($type);
         $this->filePath = $filePath;
-        $this->version = $version; // @todo remove float cast in order to support minor versions
+        $this->version = $version;
         $this->endpoint = strtolower($endpoint);
     }
 }

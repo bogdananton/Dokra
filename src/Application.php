@@ -100,7 +100,7 @@ class Application
             if (!empty($matches)) {
                 array_shift($matches);
 
-                if (count($matches) == count($matchingKeys)) {
+                if (count($matches) === count($matchingKeys)) {
                     $version = $endpoint = null;
 
                     foreach ($matchingKeys as $index => $matchingKey) {

@@ -1,0 +1,8 @@
+{
+    "name": "bogdananton/dokra-application-1",
+    "autoload": {
+        "psr-4": {
+            "DokraApplication\\": ["/", "app/"]
+        }
+    }
+}

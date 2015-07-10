@@ -1,0 +1,178 @@
+{
+    "element": {
+        "1.0": null,
+        "2.0": {
+            "methodsAdded": [
+                "updateRegion"
+            ],
+            "methodsRemoved": null,
+            "methodsSignatureChanges": {
+                "addRegion": [
+                    {
+                        "messageType": "input",
+                        "changeType": "parameter structure changed",
+                        "parameters": [
+                            "Hash",
+                            "Region"
+                        ],
+                        "diffParameterStructure": {
+                            "1": {
+                                "current": {
+                                    "MaxCapacity": {
+                                        "type": "integer",
+                                        "isBasic": true,
+                                        "isNillable": false
+                                    },
+                                    "Date": {
+                                        "type": "string",
+                                        "isBasic": true,
+                                        "isNillable": false
+                                    },
+                                    "Active": {
+                                        "type": "boolean",
+                                        "isBasic": true,
+                                        "isNillable": false
+                                    },
+                                    "Lat": {
+                                        "type": "double",
+                                        "isBasic": true,
+                                        "isNillable": true
+                                    },
+                                    "Lon": {
+                                        "type": "double",
+                                        "isBasic": true,
+                                        "isNillable": true
+                                    },
+                                    "Name": {
+                                        "type": "string",
+                                        "isBasic": true,
+                                        "isNillable": false
+                                    },
+                                    "Code": {
+                                        "type": "string",
+                                        "isBasic": true,
+                                        "isNillable": true
+                                    },
+                                    "Description": {
+                                        "type": "string",
+                                        "isBasic": true,
+                                        "isNillable": false
+                                    }
+                                },
+                                "previous": {
+                                    "Name": {
+                                        "type": "string",
+                                        "isBasic": true,
+                                        "isNillable": false
+                                    },
+                                    "Code": {
+                                        "type": "string",
+                                        "isBasic": true,
+                                        "isNillable": true
+                                    },
+                                    "MaxCapacity": {
+                                        "type": "integer",
+                                        "isBasic": true,
+                                        "isNillable": false
+                                    },
+                                    "Date": {
+                                        "type": "string",
+                                        "isBasic": true,
+                                        "isNillable": false
+                                    },
+                                    "Active": {
+                                        "type": "boolean",
+                                        "isBasic": true,
+                                        "isNillable": false
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ],
+                "getRegion": [
+                    {
+                        "messageType": "output",
+                        "changeType": "parameter structure changed",
+                        "structure": [
+                            {
+                                "current": {
+                                    "MaxCapacity": {
+                                        "type": "integer",
+                                        "isBasic": true,
+                                        "isNillable": false
+                                    },
+                                    "Date": {
+                                        "type": "string",
+                                        "isBasic": true,
+                                        "isNillable": false
+                                    },
+                                    "Active": {
+                                        "type": "boolean",
+                                        "isBasic": true,
+                                        "isNillable": false
+                                    },
+                                    "Lat": {
+                                        "type": "double",
+                                        "isBasic": true,
+                                        "isNillable": true
+                                    },
+                                    "Lon": {
+                                        "type": "double",
+                                        "isBasic": true,
+                                        "isNillable": true
+                                    },
+                                    "Name": {
+                                        "type": "string",
+                                        "isBasic": true,
+                                        "isNillable": false
+                                    },
+                                    "Code": {
+                                        "type": "string",
+                                        "isBasic": true,
+                                        "isNillable": true
+                                    },
+                                    "Description": {
+                                        "type": "string",
+                                        "isBasic": true,
+                                        "isNillable": false
+                                    }
+                                },
+                                "previous": {
+                                    "Name": {
+                                        "type": "string",
+                                        "isBasic": true,
+                                        "isNillable": false
+                                    },
+                                    "Code": {
+                                        "type": "string",
+                                        "isBasic": true,
+                                        "isNillable": true
+                                    },
+                                    "MaxCapacity": {
+                                        "type": "integer",
+                                        "isBasic": true,
+                                        "isNillable": false
+                                    },
+                                    "Date": {
+                                        "type": "string",
+                                        "isBasic": true,
+                                        "isNillable": false
+                                    },
+                                    "Active": {
+                                        "type": "boolean",
+                                        "isBasic": true,
+                                        "isNillable": false
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    },
+    "user": {
+        "1.0": null
+    }
+}

@@ -1,0 +1,411 @@
+{
+    "wsdl": [
+        {
+            "source": {
+                "type": "WSDL",
+                "filePath": "\/projects\/Dokra\/sample\/tools-cli\/..\/application\/app\/views\/soap-rpc\/element\/element-2.0.wsdl",
+                "version": "2.0",
+                "endpoint": "element"
+            },
+            "complexTypes": {
+                "complexTypes": {
+                    "Region": {
+                        "type": "object",
+                        "elements": {
+                            "MaxCapacity": {
+                                "type": "integer",
+                                "isBasic": true,
+                                "isNillable": false
+                            },
+                            "Date": {
+                                "type": "string",
+                                "isBasic": true,
+                                "isNillable": false
+                            },
+                            "Active": {
+                                "type": "boolean",
+                                "isBasic": true,
+                                "isNillable": false
+                            },
+                            "Lat": {
+                                "type": "double",
+                                "isBasic": true,
+                                "isNillable": true
+                            },
+                            "Lon": {
+                                "type": "double",
+                                "isBasic": true,
+                                "isNillable": true
+                            }
+                        },
+                        "extends": {
+                            "type": "Basic",
+                            "isBasic": false
+                        }
+                    },
+                    "Basic": {
+                        "type": "object",
+                        "elements": {
+                            "Name": {
+                                "type": "string",
+                                "isBasic": true,
+                                "isNillable": false
+                            },
+                            "Code": {
+                                "type": "string",
+                                "isBasic": true,
+                                "isNillable": true
+                            },
+                            "Description": {
+                                "type": "string",
+                                "isBasic": true,
+                                "isNillable": false
+                            }
+                        },
+                        "extends": null
+                    }
+                },
+                "arrayTypes": {
+                    "StringArray": {
+                        "type": "array",
+                        "ofType": "string",
+                        "isBasic": true
+                    },
+                    "RegionArray": {
+                        "type": "array",
+                        "ofType": "Region",
+                        "isBasic": true
+                    }
+                }
+            },
+            "methodMessages": {
+                "addRegionRequest": {
+                    "Hash": {
+                        "type": "string",
+                        "isBasic": true,
+                        "isNull": false
+                    },
+                    "Region": {
+                        "type": "Region",
+                        "isBasic": false,
+                        "isNull": false
+                    }
+                },
+                "addRegionResponse": {
+                    "Code": {
+                        "type": "string",
+                        "isBasic": true,
+                        "isNull": false
+                    }
+                },
+                "updateRegionRequest": {
+                    "Hash": {
+                        "type": "string",
+                        "isBasic": true,
+                        "isNull": false
+                    },
+                    "Region": {
+                        "type": "Region",
+                        "isBasic": false,
+                        "isNull": false
+                    }
+                },
+                "updateRegionResponse": {
+                    "Updated": {
+                        "type": "boolean",
+                        "isBasic": true,
+                        "isNull": false
+                    }
+                },
+                "getRegionRequest": {
+                    "Hash": {
+                        "type": "string",
+                        "isBasic": true,
+                        "isNull": false
+                    },
+                    "Code": {
+                        "type": "string",
+                        "isBasic": true,
+                        "isNull": false
+                    }
+                },
+                "getRegionResponse": {
+                    "Region": {
+                        "type": "Region",
+                        "isBasic": false,
+                        "isNull": false
+                    }
+                },
+                "getRegionsRequest": {
+                    "Hash": {
+                        "type": "string",
+                        "isBasic": true,
+                        "isNull": false
+                    },
+                    "Codes": {
+                        "type": "StringArray",
+                        "isBasic": false,
+                        "isNull": false
+                    }
+                },
+                "getRegionsResponse": {
+                    "Regions": {
+                        "type": "RegionArray",
+                        "isBasic": false,
+                        "isNull": false
+                    }
+                }
+            },
+            "methodOperations": [
+                {
+                    "inputMessage": {
+                        "type": "addRegionRequest",
+                        "isBasic": false
+                    },
+                    "outputMessage": {
+                        "type": "addRegionResponse",
+                        "isBasic": false
+                    },
+                    "methodName": "addRegion",
+                    "methodDocumentation": ""
+                },
+                {
+                    "inputMessage": {
+                        "type": "updateRegionRequest",
+                        "isBasic": false
+                    },
+                    "outputMessage": {
+                        "type": "updateRegionResponse",
+                        "isBasic": false
+                    },
+                    "methodName": "updateRegion",
+                    "methodDocumentation": ""
+                },
+                {
+                    "inputMessage": {
+                        "type": "getRegionRequest",
+                        "isBasic": false
+                    },
+                    "outputMessage": {
+                        "type": "getRegionResponse",
+                        "isBasic": false
+                    },
+                    "methodName": "getRegion",
+                    "methodDocumentation": ""
+                },
+                {
+                    "inputMessage": {
+                        "type": "getRegionsRequest",
+                        "isBasic": false
+                    },
+                    "outputMessage": {
+                        "type": "getRegionsResponse",
+                        "isBasic": false
+                    },
+                    "methodName": "getRegions",
+                    "methodDocumentation": ""
+                }
+            ]
+        },
+        {
+            "source": {
+                "type": "WSDL",
+                "filePath": "\/projects\/Dokra\/sample\/tools-cli\/..\/application\/app\/views\/soap-rpc\/element\/element-1.0.wsdl",
+                "version": "1.0",
+                "endpoint": "element"
+            },
+            "complexTypes": {
+                "complexTypes": {
+                    "Region": {
+                        "type": "object",
+                        "elements": {
+                            "Name": {
+                                "type": "string",
+                                "isBasic": true,
+                                "isNillable": false
+                            },
+                            "Code": {
+                                "type": "string",
+                                "isBasic": true,
+                                "isNillable": true
+                            },
+                            "MaxCapacity": {
+                                "type": "integer",
+                                "isBasic": true,
+                                "isNillable": false
+                            },
+                            "Date": {
+                                "type": "string",
+                                "isBasic": true,
+                                "isNillable": false
+                            },
+                            "Active": {
+                                "type": "boolean",
+                                "isBasic": true,
+                                "isNillable": false
+                            }
+                        },
+                        "extends": null
+                    }
+                },
+                "arrayTypes": {
+                    "StringArray": {
+                        "type": "array",
+                        "ofType": "string",
+                        "isBasic": true
+                    },
+                    "RegionArray": {
+                        "type": "array",
+                        "ofType": "Region",
+                        "isBasic": true
+                    }
+                }
+            },
+            "methodMessages": {
+                "addRegionRequest": {
+                    "Hash": {
+                        "type": "string",
+                        "isBasic": true,
+                        "isNull": false
+                    },
+                    "Region": {
+                        "type": "Region",
+                        "isBasic": false,
+                        "isNull": false
+                    }
+                },
+                "addRegionResponse": {
+                    "Code": {
+                        "type": "string",
+                        "isBasic": true,
+                        "isNull": false
+                    }
+                },
+                "getRegionRequest": {
+                    "Hash": {
+                        "type": "string",
+                        "isBasic": true,
+                        "isNull": false
+                    },
+                    "Code": {
+                        "type": "string",
+                        "isBasic": true,
+                        "isNull": false
+                    }
+                },
+                "getRegionResponse": {
+                    "Region": {
+                        "type": "Region",
+                        "isBasic": false,
+                        "isNull": false
+                    }
+                },
+                "getRegionsRequest": {
+                    "Hash": {
+                        "type": "string",
+                        "isBasic": true,
+                        "isNull": false
+                    },
+                    "Codes": {
+                        "type": "StringArray",
+                        "isBasic": false,
+                        "isNull": false
+                    }
+                },
+                "getRegionsResponse": {
+                    "Regions": {
+                        "type": "RegionArray",
+                        "isBasic": false,
+                        "isNull": false
+                    }
+                }
+            },
+            "methodOperations": [
+                {
+                    "inputMessage": {
+                        "type": "addRegionRequest",
+                        "isBasic": false
+                    },
+                    "outputMessage": {
+                        "type": "addRegionResponse",
+                        "isBasic": false
+                    },
+                    "methodName": "addRegion",
+                    "methodDocumentation": ""
+                },
+                {
+                    "inputMessage": {
+                        "type": "getRegionRequest",
+                        "isBasic": false
+                    },
+                    "outputMessage": {
+                        "type": "getRegionResponse",
+                        "isBasic": false
+                    },
+                    "methodName": "getRegion",
+                    "methodDocumentation": ""
+                },
+                {
+                    "inputMessage": {
+                        "type": "getRegionsRequest",
+                        "isBasic": false
+                    },
+                    "outputMessage": {
+                        "type": "getRegionsResponse",
+                        "isBasic": false
+                    },
+                    "methodName": "getRegions",
+                    "methodDocumentation": ""
+                }
+            ]
+        },
+        {
+            "source": {
+                "type": "WSDL",
+                "filePath": "\/projects\/Dokra\/sample\/tools-cli\/..\/application\/app\/views\/soap-rpc\/user\/user-1.0.wsdl",
+                "version": "1.0",
+                "endpoint": "user"
+            },
+            "complexTypes": {
+                "complexTypes": [],
+                "arrayTypes": []
+            },
+            "methodMessages": {
+                "loginRequest": {
+                    "Username": {
+                        "type": "string",
+                        "isBasic": true,
+                        "isNull": false
+                    },
+                    "Password": {
+                        "type": "string",
+                        "isBasic": true,
+                        "isNull": false
+                    }
+                },
+                "loginResponse": {
+                    "Hash": {
+                        "type": "string",
+                        "isBasic": true,
+                        "isNull": false
+                    }
+                }
+            },
+            "methodOperations": [
+                {
+                    "inputMessage": {
+                        "type": "loginRequest",
+                        "isBasic": false
+                    },
+                    "outputMessage": {
+                        "type": "loginResponse",
+                        "isBasic": false
+                    },
+                    "methodName": "login",
+                    "methodDocumentation": "Returns the login hash for the session."
+                }
+            ]
+        }
+    ],
+    "php": []
+}

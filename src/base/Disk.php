@@ -25,7 +25,7 @@ class Disk
 
         $response = array_keys(iterator_to_array($Regex));
 
-        file_put_contents($cacheFile, json_encode($response));
+        file_put_contents($cacheFile, json_encode($response, JSON_PRETTY_PRINT));
         return $response;
     }
 }

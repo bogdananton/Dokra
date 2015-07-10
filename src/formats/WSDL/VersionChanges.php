@@ -28,9 +28,9 @@ class VersionChanges
     protected function getPreviousVersion()
     {
         $previousVersion = null;
-        if (isset($this->hashMaps[$this->currentEndpoint])) {
+        if (array_key_exists($this->currentEndpoint, $this->hashMaps)) {
             foreach ($this->hashMaps[$this->currentEndpoint] as $version => $entry) {
-                if ($version == $this->currentVersion) {
+                if ($version === $this->currentVersion) {
                     break;
                 }
                 $previousVersion = $version;
@@ -58,16 +58,16 @@ class VersionChanges
 
         foreach ($this->hashMaps as $endpoint => $endpointEntry) {
             $endpointString = str_replace(' ', '-', ucwords(strtolower(str_replace(['-', '_'], ' ', $endpoint))));
+            $this->currentEndpoint = $endpoint;
 
             foreach ($endpointEntry as $version => $endpointItemChanges) {
-                if (is_null($endpointItemChanges)) {
+                if (null === $endpointItemChanges) {
                     continue; // ignore first version
                 }
 
                 $html .= "# " . $endpointString . ' ' . $version . " WSDL\n\n";
 
                 $this->currentVersion = $version;
-                $this->currentEndpoint = $endpoint;
 
                 foreach ($endpointItemChanges as $changeGroup => $changes) {
                     $changeGroupLabel = "## " . ucfirst(strtolower(implode(" ", preg_split('/(?=[A-Z])/', $changeGroup))));

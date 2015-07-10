@@ -1,0 +1,187 @@
+<definitions
+   name="element"
+   targetNamespace="element"
+   xmlns:typens="element"
+   xmlns="http://schemas.xmlsoap.org/wsdl/"
+   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+   xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+   xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+   <types>
+      <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:element">
+         <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <xsd:complexType name="StringArray">
+            <xsd:complexContent>
+               <xsd:restriction base="soapenc:Array">
+                  <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:string[]"/>
+               </xsd:restriction>
+            </xsd:complexContent>
+         </xsd:complexType>
+
+         <xsd:complexType name="RegionArray">
+            <xsd:complexContent>
+               <xsd:restriction base="soapenc:Array">
+                  <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:Region[]"/>
+               </xsd:restriction>
+            </xsd:complexContent>
+         </xsd:complexType>
+
+         <xsd:complexType name="Region">
+            <xsd:complexContent>
+               <xsd:extension base="typens:Basic">
+                  <xsd:sequence>
+                     <xsd:element name="MaxCapacity" type="xsd:integer"/>
+                     <xsd:element name="Date" type="xsd:string"/>
+                     <xsd:element name="Active" type="xsd:boolean"/>
+                     <xsd:element name="Lat" type="xsd:double" nillable="true"/>
+                     <xsd:element name="Lon" type="xsd:double" nillable="true"/>
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+
+         <xsd:complexType abstract="true" name="Basic">
+            <xsd:sequence>
+               <xsd:element name="Name" type="xsd:string"/>
+               <xsd:element name="Code" type="xsd:string" nillable="true" />
+               <xsd:element name="Description" type="xsd:string"/>
+            </xsd:sequence>
+         </xsd:complexType>
+      </xsd:schema>
+   </types>
+ 
+   <message name="addRegionRequest">
+      <part name="Hash" type="xsd:string"/>
+      <part name="Region" type="typens:Region"/>
+   </message>
+
+   <message name="addRegionResponse">
+      <part name="Code" type="xsd:string"/>
+   </message>
+ 
+   <message name="updateRegionRequest">
+      <part name="Hash" type="xsd:string"/>
+      <part name="Region" type="typens:Region"/>
+   </message>
+
+   <message name="updateRegionResponse">
+      <part name="Updated" type="xsd:boolean"/>
+   </message>
+ 
+   <message name="getRegionRequest">
+      <part name="Hash" type="xsd:string"/>
+      <part name="Code" type="xsd:string"/>
+   </message>
+
+   <message name="getRegionResponse">
+      <part name="Region" type="typens:Region"/>
+   </message>
+ 
+   <message name="getRegionsRequest">
+      <part name="Hash" type="xsd:string"/>
+      <part name="Codes" type="typens:StringArray"/>
+   </message>
+
+   <message name="getRegionsResponse">
+      <part name="Regions" type="typens:RegionArray"/>
+   </message>
+
+   <portType name="ElementPortType">
+      <operation name="addRegion">
+         <input message="typens:addRegionRequest"/>
+         <output message="typens:addRegionResponse"/>
+      </operation>
+      
+      <operation name="updateRegion">
+         <input message="typens:updateRegionRequest"/>
+         <output message="typens:updateRegionResponse"/>
+      </operation>
+      
+      <operation name="getRegion">
+         <input message="typens:getRegionRequest"/>
+         <output message="typens:getRegionResponse"/>
+      </operation>
+
+      <operation name="getRegions">
+         <input message="typens:getRegionsRequest"/>
+         <output message="typens:getRegionsResponse"/>
+      </operation>
+   </portType>
+
+   <binding name="ElementBinding" type="typens:ElementPortType">
+      <soap:binding style="rpc"
+         transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <operation name="addRegion">
+         <soap:operation soapAction="addRegion"/>
+         <input>
+            <soap:body
+               encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+               namespace="urn:element"
+               use="encoded"/>
+         </input>
+         <output>
+            <soap:body
+               encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+               namespace="urn:element"
+               use="encoded"/>
+         </output>
+      </operation>
+
+      <operation name="updateRegion">
+         <soap:operation soapAction="updateRegion"/>
+         <input>
+            <soap:body
+               encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+               namespace="urn:element"
+               use="encoded"/>
+         </input>
+         <output>
+            <soap:body
+               encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+               namespace="urn:element"
+               use="encoded"/>
+         </output>
+      </operation>
+
+      <operation name="getRegion">
+         <soap:operation soapAction="getRegion"/>
+         <input>
+            <soap:body
+               encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+               namespace="urn:element"
+               use="encoded"/>
+         </input>
+         <output>
+            <soap:body
+               encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+               namespace="urn:element"
+               use="encoded"/>
+         </output>
+      </operation>
+
+      <operation name="getRegions">
+         <soap:operation soapAction="getRegions"/>
+         <input>
+            <soap:body
+               encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+               namespace="urn:element"
+               use="encoded"/>
+         </input>
+         <output>
+            <soap:body
+               encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+               namespace="urn:element"
+               use="encoded"/>
+         </output>
+      </operation>
+   </binding>
+
+   <service name="ElementService">
+      <documentation>WSDL File for Elements</documentation>
+      <port binding="typens:ElementBinding" name="ElementPort">
+         <soap:address location="http://application-1.dokra.dev/soap-rpc/element/v2" />
+      </port>
+   </service>
+</definitions>

@@ -7,7 +7,7 @@
     },
     "require-dev": {
       "mockery/mockery": "*",
-      "satooshi/php-coveralls": "dev-master",
+      "satooshi/php-coveralls": "0.6.*",
       "phpunit/phpunit": "*",
       "codeclimate/php-test-reporter": "dev-master"
     },

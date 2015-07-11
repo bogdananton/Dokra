@@ -438,18 +438,18 @@ class VersionChanges
                         }
                     }
                 }
-                $this->checkSignatureChangesWhenBasicTypeMessages($currentTypeInputMessage, $previousTypeInputMessage, $methodName, $currentTypeOutputMessage, $previousTypeOutputMessage, $response);
+                $this->checkSignatureForBasicTypeMsgs($currentTypeInputMessage, $previousTypeInputMessage, $methodName, $currentTypeOutputMessage, $previousTypeOutputMessage, $response);
 
                 // check output
                 $diffOutputStructure = [];
                 $outputHasSameStructure = true;
 
-                $currentOutputMessage = $currentWSDL->methodMessages[$currentTypeOutputMessage->type];
-                $previousOutputMessage = $previousWSDL->methodMessages[$previousTypeOutputMessage->type];
-                $currentOutputLabels = array_keys($currentOutputMessage);
-                $previousOutputLabels = array_keys($previousOutputMessage);
+                $currentOutput = $currentWSDL->methodMessages[$currentTypeOutputMessage->type];
+                $previousOutput = $previousWSDL->methodMessages[$previousTypeOutputMessage->type];
+                $currentOutputLabels = array_keys($currentOutput);
+                $previousOutputLabels = array_keys($previousOutput);
 
-                $this->checkSignaturesHaveTheSameStructure($currentWSDL, $previousWSDL, $currentOutputLabels, $currentOutputMessage, $previousOutputLabels, $previousOutputMessage, $diffOutputStructure, $outputHasSameStructure);
+                $this->checkSignaturesHaveTheSameStructure($currentWSDL, $previousWSDL, $currentOutputLabels, $currentOutput, $previousOutputLabels, $previousOutput, $diffOutputStructure, $outputHasSameStructure);
 
                 if (!empty($diffOutputStructure)) {
                     $this->appendSignatureChangeItem($response, $methodName, (object)[
@@ -583,60 +583,60 @@ class VersionChanges
         $response[$methodName][] = $changeSignature;
     }
 
-    protected function checkSignatureChangesWhenBasicTypeMessages($currentTypeInputMessage, $previousTypeInputMessage, $methodName, $currentTypeOutputMessage, $previousTypeOutputMessage, &$response)
+    protected function checkSignatureForBasicTypeMsgs($currentTypeInMsg, $previousTypeInputMessage, $methodName, $currentTypeOutMsg, $prevTypeOutMsg, &$response)
     {
         // BEGIN: the scenario below should not happen, but we'll leave here just in case and for debugging
-        if ($currentTypeInputMessage->isBasic && $previousTypeInputMessage->isBasic) {
-            if ($currentTypeInputMessage->type != $previousTypeInputMessage->type) {
-                $changeSignature = new \stdClass;
-                $changeSignature->messageType = 'input';
-                $changeSignature->changeType = 'different parameter basic type';
-                $changeSignature->previousType = $previousTypeInputMessage->type;
-                $changeSignature->currentType = $currentTypeInputMessage->type;
+        if ($currentTypeInMsg->isBasic && $previousTypeInputMessage->isBasic) {
+            if ($currentTypeInMsg->type != $previousTypeInputMessage->type) {
+                $sigChange = new \stdClass;
+                $sigChange->messageType = 'input';
+                $sigChange->changeType = 'different parameter basic type';
+                $sigChange->previousType = $previousTypeInputMessage->type;
+                $sigChange->currentType = $currentTypeInMsg->type;
 
-                $this->appendSignatureChangeItem($response, $methodName, $changeSignature);
+                $this->appendSignatureChangeItem($response, $methodName, $sigChange);
             }
         }
 
-        if ((!$currentTypeInputMessage->isBasic && $previousTypeInputMessage->isBasic) || ($currentTypeInputMessage->isBasic && !$previousTypeInputMessage->isBasic)) {
-            $changeSignature = new \stdClass;
-            $changeSignature->messageType = 'input';
-            $changeSignature->changeType = 'different parameter basic type';
-            $changeSignature->previousType = $previousTypeInputMessage->type;
-            $changeSignature->currentType = $currentTypeInputMessage->type;
+        if ((!$currentTypeInMsg->isBasic && $previousTypeInputMessage->isBasic) || ($currentTypeInMsg->isBasic && !$previousTypeInputMessage->isBasic)) {
+            $sigChange = new \stdClass;
+            $sigChange->messageType = 'input';
+            $sigChange->changeType = 'different parameter basic type';
+            $sigChange->previousType = $previousTypeInputMessage->type;
+            $sigChange->currentType = $currentTypeInMsg->type;
 
-            $this->appendSignatureChangeItem($response, $methodName, $changeSignature);
+            $this->appendSignatureChangeItem($response, $methodName, $sigChange);
         }
 
-        if ($currentTypeOutputMessage->isBasic && $previousTypeOutputMessage->isBasic) {
-            if ($currentTypeOutputMessage->type != $previousTypeOutputMessage->type) {
-                $changeSignature = new \stdClass;
-                $changeSignature->messageType = 'output';
-                $changeSignature->changeType = 'different parameter basic type';
-                $changeSignature->previousType = $previousTypeOutputMessage->type;
-                $changeSignature->currentType = $currentTypeOutputMessage->type;
+        if ($currentTypeOutMsg->isBasic && $prevTypeOutMsg->isBasic) {
+            if ($currentTypeOutMsg->type != $prevTypeOutMsg->type) {
+                $sigChange = new \stdClass;
+                $sigChange->messageType = 'output';
+                $sigChange->changeType = 'different parameter basic type';
+                $sigChange->previousType = $prevTypeOutMsg->type;
+                $sigChange->currentType = $currentTypeOutMsg->type;
 
-                $this->appendSignatureChangeItem($response, $methodName, $changeSignature);
+                $this->appendSignatureChangeItem($response, $methodName, $sigChange);
             }
         }
 
-        if ((!$currentTypeOutputMessage->isBasic && $previousTypeOutputMessage->isBasic) || ($currentTypeOutputMessage->isBasic && !$previousTypeOutputMessage->isBasic)) {
-            $changeSignature = new \stdClass;
-            $changeSignature->messageType = 'output';
-            $changeSignature->changeType = 'different parameter basic type';
-            $changeSignature->previousType = $previousTypeOutputMessage->type;
-            $changeSignature->currentType = $currentTypeOutputMessage->type;
+        if ((!$currentTypeOutMsg->isBasic && $prevTypeOutMsg->isBasic) || ($currentTypeOutMsg->isBasic && !$prevTypeOutMsg->isBasic)) {
+            $sigChange = new \stdClass;
+            $sigChange->messageType = 'output';
+            $sigChange->changeType = 'different parameter basic type';
+            $sigChange->previousType = $prevTypeOutMsg->type;
+            $sigChange->currentType = $currentTypeOutMsg->type;
 
-            $this->appendSignatureChangeItem($response, $methodName, $changeSignature);
+            $this->appendSignatureChangeItem($response, $methodName, $sigChange);
         }
         // END
     }
 
-    protected function allParametersAreNillable($params, &$diffBackwardCompatible, $message)
+    protected function allParametersAreNillable($params, &$diffBackCompatible, $message)
     {
         if (!empty($params)) {
             foreach ($params as $paramName) {
-                $diffBackwardCompatible = $diffBackwardCompatible & ($message[$paramName]->isNull);
+                $diffBackCompatible = $diffBackCompatible & ($message[$paramName]->isNull);
             }
         }
     }
@@ -651,18 +651,18 @@ class VersionChanges
         return $messageTypes;
     }
 
-    protected function checkSignaturesHaveTheSameStructure($currentWSDL, $previousWSDL, $currentParams, $currentInputMessage, $previousParams, $previousInputMessage, &$diffParameterStructure, &$parameterHaveSameStructure)
+    protected function checkSignaturesHaveTheSameStructure($currentWSDL, $previousWSDL, $currentParams, $currentInput, $previousParams, $prevInput, &$diffParamStructure, &$parameterHaveSameStructure)
     {
         foreach ($currentParams as $index => $parameterName) {
-            $currentParameterType = $this->getParameterStructure($currentInputMessage[$parameterName], $currentWSDL);
+            $currentParamType = $this->getParameterStructure($currentInput[$parameterName], $currentWSDL);
 
-            $previousParameterName = $previousParams[$index];
-            $previousParameterType = $this->getParameterStructure($previousInputMessage[$previousParameterName], $previousWSDL);
+            $prevParamName = $previousParams[$index];
+            $prevParamType = $this->getParameterStructure($prevInput[$prevParamName], $previousWSDL);
 
-            if ($previousParameterType != $currentParameterType) {
-                $diffParameterStructure[$index] = [
-                    "current" => $currentParameterType,
-                    "previous" => $previousParameterType
+            if ($prevParamType != $currentParamType) {
+                $diffParamStructure[$index] = [
+                    "current" => $currentParamType,
+                    "previous" => $prevParamType
                 ];
 
                 $parameterHaveSameStructure = false;

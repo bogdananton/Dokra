@@ -1,9 +1,11 @@
 <?php
-namespace Dokra\assets;
+namespace Dokra\formats\PHP\Obj;
 
+use Dokra\Application;
 use \Dokra\base\Config;
+use Dokra\formats\PHP\Importer;
 
-class PHPEntry
+class ClassEntry
 {
     use Config;
 
@@ -21,7 +23,7 @@ class PHPEntry
 
     public static function processRawDockblock($raw)
     {
-        return new PHPMethodDocblock($raw);
+        return new MethodDoc($raw);
     }
 
     public function getMethodDocblock($methodName)
@@ -58,10 +60,7 @@ class PHPEntry
         if (!is_null($filename)) {
             $contents = file_get_contents($filename);
 
-            preg_match('/namespace\s(.*)\;/', $contents, $matches);
-            if ($matches) {
-                $this->namespace = $matches[1];
-            }
+            $this->namespace = Importer::getNamespace($contents);
 
             preg_match('/class\s([\w_]+)\sextends\s([\w_]+)/', $contents, $matches);
             if ($matches) {
@@ -108,7 +107,7 @@ class PHPEntry
                 $seekForNamespace = substr($seekForNamespace, 1);
             }
 
-            foreach ($this->config()->get("php.files") as $file) {
+            foreach ($this->config()->get(Application::PROJECT_FILES) as $file) {
                 if (strtolower(substr($file, -4)) != '.php') {
                     continue;
                 }
@@ -139,28 +138,26 @@ class PHPEntry
                     $append = true;
 
                     for ($j=0; $j <= 20; $j++) {
-                        $lineCursor = $i - $j;
-                        if ($lineCursor > 0) {
+                        $lineCursor = max($i - $j, 0);
 
-                            if (trim($lines[$lineCursor]) == '*/') {
-                                $listen = true;
-                            }
+                        if (trim($lines[$lineCursor]) == '*/') {
+                            $listen = true;
+                        }
 
-                            if ($append && ($j < 2 || $listen)) {
-                                $insertedLine = trim($lines[$lineCursor]);
-                                if (!empty($insertedLine)) {
-                                    array_unshift($rawDocblock, $insertedLine);
-                                }
+                        if ($append && ($j < 2 || $listen)) {
+                            $insertedLine = trim($lines[$lineCursor]);
+                            if (!empty($insertedLine)) {
+                                array_unshift($rawDocblock, $insertedLine);
                             }
+                        }
 
-                            if ((trim($lines[$lineCursor]) == '/**') || (trim($lines[$lineCursor]) == '/*')) {
-                                $listen = false;
-                                $append = false;
-                            }
+                        if ((trim($lines[$lineCursor]) == '/**') || (trim($lines[$lineCursor]) == '/*')) {
+                            $listen = false;
+                            $append = false;
                         }
                     }
 
-                    $this->methods[ array_search($matches[1], $this->methods) ] = array(
+                    $this->methods[array_search($matches[1], $this->methods)] = array(
                         'line' => $i,
                         'method' => $matches[1],
                         'rawDocblock' => $rawDocblock,
@@ -169,6 +166,41 @@ class PHPEntry
                 }
             }
 
+            $this->expandTypes();
         }
+    }
+
+    protected function expandTypes()
+    {
+        foreach ($this->methods as $key => $contents) {
+            if (array_key_exists('processed', $contents)) {
+
+                foreach (['Params', 'Return'] as $ioType) {
+                    $params = $contents['processed']->{$ioType};
+                    if (count($params) > 0) {
+                        foreach ($params as $index => $param) {
+                            $isArrayOfItems = (substr($param->type, -2) === '[]');
+
+                            if ($isArrayOfItems) {
+                                $param->type = substr($param->type, 0, -2);
+                            }
+
+                            $param->isArray = $isArrayOfItems;
+                            $isBasicType = ($this->isBasicType($param->type));
+
+                            if (!$isBasicType) {
+                                $param->details = new ComplexType($param, $this->filename, $this->namespace);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    protected function isBasicType($type)
+    {
+        // @todo 'stdClass', '\stdClass' ?
+        return in_array($type, ['string', 'int', 'integer', 'bool', 'boolean'], false);
     }
 }

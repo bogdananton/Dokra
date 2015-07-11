@@ -19,6 +19,9 @@ class Application
     const INTERFACES = 'interfaces';
     const VERSION_CHANGES = 'versionChanges';
     const STORAGE = 'storage';
+    const FLASH_STORAGE_TASK = 'flash.storage.task';
+
+    const FLAG_USE_REFLECTION = 'flag.use.reflection.to.extract.php.assets';
 
     const STRUCTURE_WSDL_JSON = 'structure.wsdl.json';
     const DIFF_WSDL_JSON = 'diff.wsdl.json';
@@ -39,6 +42,7 @@ class Application
     public function addTask($taskCode)
     {
         $this->tasks[] = $taskCode;
+        return $this;
     }
 
     /**
@@ -47,8 +51,10 @@ class Application
     public function run()
     {
         $response = false;
+        $tasks = $this->tasks;
+        $this->tasks = [];
 
-        foreach ($this->tasks as $task) {
+        foreach ($tasks as $task) {
             $instance = Task::getInstance($task);
             if ($instance instanceof Task) {
                 $instance->execute($this);

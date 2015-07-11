@@ -1,7 +1,8 @@
 <?php
-namespace Dokra\assets;
+namespace Dokra\formats\PHP\Obj;
 
-class PHPReturn
+
+class Returns
 {
     public $type;
     public $details;

@@ -19,10 +19,11 @@ class Region
      * Region's maximum capacity.
      * @var int
      */
-    public $MaxCapacity;
+    public $MaxCapacity = 99999;
 
     /**
      * The date when the element was created.
+     * @var string
      */
     public $Date;
 

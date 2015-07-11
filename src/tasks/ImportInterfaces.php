@@ -9,7 +9,7 @@ use Dokra\storage\FileStorage;
 use Dokra\base\Config;
 use Dokra\base\Task;
 
-class ProcessInterfaces extends Task
+class ImportInterfaces extends Task
 {
     protected $app;
     protected $importers;

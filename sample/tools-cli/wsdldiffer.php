@@ -12,7 +12,7 @@ $configuration = require_once 'configuration.php';
 $app->initConfig($configuration);
 
 $app->addTask(TaskManager::SCAN_FILES);
-$app->addTask(TaskManager::PROCESS_INTERFACES);
+$app->addTask(TaskManager::IMPORT_INTERFACES);
 $app->addTask(TaskManager::OUTPUT_CACHE);
 $app->addTask(TaskManager::DIFF_WSDL);
 

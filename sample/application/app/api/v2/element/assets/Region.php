@@ -11,6 +11,7 @@ class Region extends Basic
 
     /**
      * The date when the element was created.
+     * @var string
      */
     public $Date;
 

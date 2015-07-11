@@ -1,7 +1,8 @@
 <?php
-namespace Dokra\assets;
+namespace Dokra\formats\PHP\Obj;
 
-class PHPThrows
+
+class Throws
 {
     public $exception;
     public $details;

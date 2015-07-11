@@ -9,7 +9,7 @@ return [
     ],
 
     'routing.regex.php' => [
-        '/\/v([\d\.]+)\/([\w]+)\/API.class.php$/' => ['version', 'endpoint']
+        '/\/v([\d\.]+)\/([\w]+)\/API.php$/' => ['version', 'endpoint']
     ],
 
     'routing.transform.endpoint' => ([

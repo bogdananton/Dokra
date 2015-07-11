@@ -1,7 +1,8 @@
 <?php
-namespace Dokra\assets;
+namespace Dokra\formats\PHP\Obj;
 
-class PHPParam
+
+class Param
 {
     // public $signature;
     public $type;
@@ -44,17 +45,17 @@ class PHPParam
 
         switch ($rawParamChunks[0]) {
             case '@param':
-                return new PHPParam($raw, $signature);
+                return new Param($raw, $signature);
                 break;
 
             case '@throw':
             case '@throws':
-                return new PHPThrows($raw);
+                return new Throws($raw);
                 break;
 
             case '@return':
             case '@returns':
-                return new PHPReturn($raw);
+                return new Returns($raw);
                 break;
             
             default:

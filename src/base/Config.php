@@ -34,6 +34,11 @@ trait Config
         $this->config()->set($key, $value);
     }
 
+    public function unsetConfig($key)
+    {
+        $this->config()->delete($key);
+    }
+
     /**
      * @return FileStorage
      */

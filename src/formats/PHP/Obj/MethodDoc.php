@@ -1,7 +1,8 @@
 <?php
-namespace Dokra\assets;
+namespace Dokra\formats\PHP\Obj;
 
-class PHPMethodDocblock
+
+class MethodDoc
 {
     public $Signature;
     public $Documentation;
@@ -14,7 +15,7 @@ class PHPMethodDocblock
         $signatureRaw = array_pop($raw);
         $docblockRaw = $raw;
 
-        $Signature = new PHPSignature($signatureRaw);
+        $Signature = new Signature($signatureRaw);
 
         $Documentation = array();
         $docblockRawParams = array();
@@ -27,18 +28,18 @@ class PHPMethodDocblock
                 }
 
                 if (substr($docblockRawEntry, 0, 1) == '@') {
-                    $param = PHPParam::getInstance($docblockRawEntry, $Signature);
+                    $param = Param::getInstance($docblockRawEntry, $Signature);
 
                     switch (get_class($param)) {
-                        case 'Dokra\assets\PHPParam':
+                        case 'Dokra\formats\PHP\Obj\Param':
                             $this->Params[] = $param;
                             break;
 
-                        case 'Dokra\assets\PHPThrows':
+                        case 'Dokra\formats\PHP\Obj\Throws':
                             $this->Throws[] = $param;
                             break;
 
-                        case 'Dokra\assets\PHPReturn':
+                        case 'Dokra\formats\PHP\Obj\Returns':
                             $this->Return[] = $param;
                             break;
                         

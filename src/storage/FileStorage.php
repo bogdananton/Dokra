@@ -45,6 +45,25 @@ class FileStorage
         return $response;
     }
 
+    public function get($filename)
+    {
+        if (file_exists($filename)) {
+            $filePath = $filename;
+        } else {
+            $filePath = $this->getPath($filename);
+        }
+
+        if (file_exists($filePath)) {
+            $contents = file_get_contents($filePath);
+            $decoded = json_decode($contents);
+            if ($decoded) {
+                return $decoded;
+            } else {
+                return $contents;
+            }
+        }
+    }
+
     public function store($filename, $data)
     {
         switch (true) {

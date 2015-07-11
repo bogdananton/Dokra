@@ -407,5 +407,513 @@
             ]
         }
     ],
-    "PHP": []
+    "PHP": [
+        {
+            "source": {
+                "type": "PHP",
+                "filePath": "\/projects\/Dokra\/sample\/tools-cli\/..\/application\/app\/api\/v1\/element\/API.php",
+                "version": "1",
+                "endpoint": "element"
+            },
+            "entry": {
+                "filename": "\/projects\/Dokra\/sample\/tools-cli\/..\/application\/app\/api\/v1\/element\/API.php",
+                "methods": [
+                    {
+                        "line": 10,
+                        "method": "getRegion",
+                        "rawDocblock": [
+                            "\/**",
+                            "* @param string $code",
+                            "*",
+                            "* @return assets\\Region",
+                            "*\/",
+                            "public function getRegion($code)"
+                        ],
+                        "processed": {
+                            "Signature": {
+                                "raw": "$code",
+                                "params": {
+                                    "code": null
+                                }
+                            },
+                            "Documentation": "",
+                            "Return": [
+                                {
+                                    "type": "assets\\Region",
+                                    "details": {
+                                        "mainFileName": "\/projects\/Dokra\/sample\/application\/app\/api\/v1\/element\/API.php",
+                                        "mainFileNamespace": "DokraApplication\\api\\v1\\element",
+                                        "namespace": null,
+                                        "filePath": "\/projects\/Dokra\/sample\/application\/app\/api\/v1\/element\/assets\/Region.php",
+                                        "classDetails": {
+                                            "namespace": "DokraApplication\\api\\v1\\element\\assets",
+                                            "className": "Region",
+                                            "extendsClass": null,
+                                            "extendsAlias": null,
+                                            "uses": []
+                                        },
+                                        "attributes": [
+                                            {
+                                                "name": "Name",
+                                                "docblock": " The Region's name.\n @var string",
+                                                "default": null,
+                                                "type": "string"
+                                            },
+                                            {
+                                                "name": "Code",
+                                                "docblock": " The Region's code. Is unique.\n @var string",
+                                                "default": null,
+                                                "type": "string"
+                                            },
+                                            {
+                                                "name": "MaxCapacity",
+                                                "docblock": " Region's maximum capacity.\n @var int",
+                                                "default": 99999,
+                                                "type": "int"
+                                            },
+                                            {
+                                                "name": "Date",
+                                                "docblock": " The date when the element was created.\n @var string",
+                                                "default": null,
+                                                "type": "string"
+                                            },
+                                            {
+                                                "name": "Active",
+                                                "docblock": " Marked true if is available for editing.\n @type bool",
+                                                "default": false,
+                                                "type": "bool"
+                                            }
+                                        ]
+                                    },
+                                    "isArray": false
+                                }
+                            ],
+                            "Throws": [],
+                            "Params": [
+                                {
+                                    "type": "string",
+                                    "name": "code",
+                                    "details": null,
+                                    "default": null,
+                                    "isArray": false
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "line": 27,
+                        "method": "addRegion",
+                        "rawDocblock": [
+                            "\/**",
+                            "* @param assets\\Region $region",
+                            "*",
+                            "* @return string",
+                            "*\/",
+                            "public function addRegion($region)"
+                        ],
+                        "processed": {
+                            "Signature": {
+                                "raw": "$region",
+                                "params": {
+                                    "region": null
+                                }
+                            },
+                            "Documentation": "",
+                            "Return": [
+                                {
+                                    "type": "string",
+                                    "details": null,
+                                    "isArray": false
+                                }
+                            ],
+                            "Throws": [],
+                            "Params": [
+                                {
+                                    "type": "assets\\Region",
+                                    "name": "region",
+                                    "details": {
+                                        "mainFileName": "\/projects\/Dokra\/sample\/application\/app\/api\/v1\/element\/API.php",
+                                        "mainFileNamespace": "DokraApplication\\api\\v1\\element",
+                                        "namespace": null,
+                                        "filePath": "\/projects\/Dokra\/sample\/application\/app\/api\/v1\/element\/assets\/Region.php",
+                                        "classDetails": {
+                                            "namespace": "DokraApplication\\api\\v1\\element\\assets",
+                                            "className": "Region",
+                                            "extendsClass": null,
+                                            "extendsAlias": null,
+                                            "uses": []
+                                        },
+                                        "attributes": [
+                                            {
+                                                "name": "Name",
+                                                "docblock": " The Region's name.\n @var string",
+                                                "default": null,
+                                                "type": "string"
+                                            },
+                                            {
+                                                "name": "Code",
+                                                "docblock": " The Region's code. Is unique.\n @var string",
+                                                "default": null,
+                                                "type": "string"
+                                            },
+                                            {
+                                                "name": "MaxCapacity",
+                                                "docblock": " Region's maximum capacity.\n @var int",
+                                                "default": 99999,
+                                                "type": "int"
+                                            },
+                                            {
+                                                "name": "Date",
+                                                "docblock": " The date when the element was created.\n @var string",
+                                                "default": null,
+                                                "type": "string"
+                                            },
+                                            {
+                                                "name": "Active",
+                                                "docblock": " Marked true if is available for editing.\n @type bool",
+                                                "default": false,
+                                                "type": "bool"
+                                            }
+                                        ]
+                                    },
+                                    "default": null,
+                                    "isArray": false
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "line": 44,
+                        "method": "getRegions",
+                        "rawDocblock": [
+                            "\/**",
+                            "* @param string[] $codes",
+                            "*",
+                            "* @return assets\\Region[]",
+                            "*\/",
+                            "public function getRegions($codes = array())"
+                        ],
+                        "processed": {
+                            "Signature": {
+                                "raw": "$codes = array()",
+                                "params": {
+                                    "codes": "array()"
+                                }
+                            },
+                            "Documentation": "",
+                            "Return": [
+                                {
+                                    "type": "assets\\Region",
+                                    "details": {
+                                        "mainFileName": "\/projects\/Dokra\/sample\/application\/app\/api\/v1\/element\/API.php",
+                                        "mainFileNamespace": "DokraApplication\\api\\v1\\element",
+                                        "namespace": null,
+                                        "filePath": "\/projects\/Dokra\/sample\/application\/app\/api\/v1\/element\/assets\/Region.php",
+                                        "classDetails": {
+                                            "namespace": "DokraApplication\\api\\v1\\element\\assets",
+                                            "className": "Region",
+                                            "extendsClass": null,
+                                            "extendsAlias": null,
+                                            "uses": []
+                                        },
+                                        "attributes": [
+                                            {
+                                                "name": "Name",
+                                                "docblock": " The Region's name.\n @var string",
+                                                "default": null,
+                                                "type": "string"
+                                            },
+                                            {
+                                                "name": "Code",
+                                                "docblock": " The Region's code. Is unique.\n @var string",
+                                                "default": null,
+                                                "type": "string"
+                                            },
+                                            {
+                                                "name": "MaxCapacity",
+                                                "docblock": " Region's maximum capacity.\n @var int",
+                                                "default": 99999,
+                                                "type": "int"
+                                            },
+                                            {
+                                                "name": "Date",
+                                                "docblock": " The date when the element was created.\n @var string",
+                                                "default": null,
+                                                "type": "string"
+                                            },
+                                            {
+                                                "name": "Active",
+                                                "docblock": " Marked true if is available for editing.\n @type bool",
+                                                "default": false,
+                                                "type": "bool"
+                                            }
+                                        ]
+                                    },
+                                    "isArray": true
+                                }
+                            ],
+                            "Throws": [],
+                            "Params": [
+                                {
+                                    "type": "string",
+                                    "name": "codes",
+                                    "details": null,
+                                    "default": "array()",
+                                    "isArray": true
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "namespace": "DokraApplication\\api\\v1\\element",
+                "extendsAlias": null,
+                "extendsClass": null,
+                "extendsFile": null,
+                "extendsPHP": null
+            }
+        },
+        {
+            "source": {
+                "type": "PHP",
+                "filePath": "\/projects\/Dokra\/sample\/tools-cli\/..\/application\/app\/api\/v2\/element\/API.php",
+                "version": "2",
+                "endpoint": "element"
+            },
+            "entry": {
+                "filename": "\/projects\/Dokra\/sample\/tools-cli\/..\/application\/app\/api\/v2\/element\/API.php",
+                "methods": [
+                    {
+                        "line": 12,
+                        "method": "getRegion",
+                        "rawDocblock": [
+                            "\/**",
+                            "* @param string $code",
+                            "*",
+                            "* @return Region",
+                            "*\/",
+                            "public function getRegion($code)"
+                        ],
+                        "processed": {
+                            "Signature": {
+                                "raw": "$code",
+                                "params": {
+                                    "code": null
+                                }
+                            },
+                            "Documentation": "",
+                            "Return": [
+                                {
+                                    "type": "Region",
+                                    "details": {
+                                        "mainFileName": "\/projects\/Dokra\/sample\/application\/app\/api\/v2\/element\/API.php",
+                                        "mainFileNamespace": "DokraApplication\\api\\v2\\element",
+                                        "namespace": null,
+                                        "filePath": null,
+                                        "classDetails": null,
+                                        "attributes": []
+                                    },
+                                    "isArray": false
+                                }
+                            ],
+                            "Throws": [],
+                            "Params": [
+                                {
+                                    "type": "string",
+                                    "name": "code",
+                                    "details": null,
+                                    "default": null,
+                                    "isArray": false
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "line": 30,
+                        "method": "addRegion",
+                        "rawDocblock": [
+                            "\/**",
+                            "* @param Region $region",
+                            "*",
+                            "* @return string",
+                            "*\/",
+                            "public function addRegion($region)"
+                        ],
+                        "processed": {
+                            "Signature": {
+                                "raw": "$region",
+                                "params": {
+                                    "region": null
+                                }
+                            },
+                            "Documentation": "",
+                            "Return": [
+                                {
+                                    "type": "string",
+                                    "details": null,
+                                    "isArray": false
+                                }
+                            ],
+                            "Throws": [],
+                            "Params": [
+                                {
+                                    "type": "Region",
+                                    "name": "region",
+                                    "details": {
+                                        "mainFileName": "\/projects\/Dokra\/sample\/application\/app\/api\/v2\/element\/API.php",
+                                        "mainFileNamespace": "DokraApplication\\api\\v2\\element",
+                                        "namespace": null,
+                                        "filePath": null,
+                                        "classDetails": null,
+                                        "attributes": []
+                                    },
+                                    "default": null,
+                                    "isArray": false
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "line": 47,
+                        "method": "deleteRegion",
+                        "rawDocblock": [
+                            "\/**",
+                            "* @param Region $region",
+                            "*",
+                            "* @return bool",
+                            "*\/",
+                            "public function deleteRegion($region)"
+                        ],
+                        "processed": {
+                            "Signature": {
+                                "raw": "$region",
+                                "params": {
+                                    "region": null
+                                }
+                            },
+                            "Documentation": "",
+                            "Return": [
+                                {
+                                    "type": "bool",
+                                    "details": null,
+                                    "isArray": false
+                                }
+                            ],
+                            "Throws": [],
+                            "Params": [
+                                {
+                                    "type": "Region",
+                                    "name": "region",
+                                    "details": {
+                                        "mainFileName": "\/projects\/Dokra\/sample\/application\/app\/api\/v2\/element\/API.php",
+                                        "mainFileNamespace": "DokraApplication\\api\\v2\\element",
+                                        "namespace": null,
+                                        "filePath": null,
+                                        "classDetails": null,
+                                        "attributes": []
+                                    },
+                                    "default": null,
+                                    "isArray": false
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "line": 59,
+                        "method": "updateRegion",
+                        "rawDocblock": [
+                            "\/**",
+                            "* @param Region $region",
+                            "*",
+                            "* @return bool",
+                            "*\/",
+                            "public function updateRegion($region)"
+                        ],
+                        "processed": {
+                            "Signature": {
+                                "raw": "$region",
+                                "params": {
+                                    "region": null
+                                }
+                            },
+                            "Documentation": "",
+                            "Return": [
+                                {
+                                    "type": "bool",
+                                    "details": null,
+                                    "isArray": false
+                                }
+                            ],
+                            "Throws": [],
+                            "Params": [
+                                {
+                                    "type": "Region",
+                                    "name": "region",
+                                    "details": {
+                                        "mainFileName": "\/projects\/Dokra\/sample\/application\/app\/api\/v2\/element\/API.php",
+                                        "mainFileNamespace": "DokraApplication\\api\\v2\\element",
+                                        "namespace": null,
+                                        "filePath": null,
+                                        "classDetails": null,
+                                        "attributes": []
+                                    },
+                                    "default": null,
+                                    "isArray": false
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "line": 71,
+                        "method": "getRegions",
+                        "rawDocblock": [
+                            "\/**",
+                            "* @param string[] $codes",
+                            "*",
+                            "* @return Region[]",
+                            "*\/",
+                            "public function getRegions($codes = array())"
+                        ],
+                        "processed": {
+                            "Signature": {
+                                "raw": "$codes = array()",
+                                "params": {
+                                    "codes": "array()"
+                                }
+                            },
+                            "Documentation": "",
+                            "Return": [
+                                {
+                                    "type": "Region",
+                                    "details": {
+                                        "mainFileName": "\/projects\/Dokra\/sample\/application\/app\/api\/v2\/element\/API.php",
+                                        "mainFileNamespace": "DokraApplication\\api\\v2\\element",
+                                        "namespace": null,
+                                        "filePath": null,
+                                        "classDetails": null,
+                                        "attributes": []
+                                    },
+                                    "isArray": true
+                                }
+                            ],
+                            "Throws": [],
+                            "Params": [
+                                {
+                                    "type": "string",
+                                    "name": "codes",
+                                    "details": null,
+                                    "default": "array()",
+                                    "isArray": true
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "namespace": "DokraApplication\\api\\v2\\element",
+                "extendsAlias": null,
+                "extendsClass": null,
+                "extendsFile": null,
+                "extendsPHP": null
+            }
+        }
+    ]
 }

@@ -3,6 +3,11 @@ namespace DokraApplication\api\v1\element;
 
 class API extends \DokraApplication\api\BaseAPI
 {
+    /**
+     * @param string $code
+     *
+     * @return assets\Region
+     */
     public function getRegion($code)
     {
         $object = new assets\Region;
@@ -15,6 +20,11 @@ class API extends \DokraApplication\api\BaseAPI
         return $object;
     }
 
+    /**
+     * @param assets\Region $region
+     *
+     * @return string
+     */
     public function addRegion($region)
     {
         $object = new assets\Region();
@@ -27,6 +37,11 @@ class API extends \DokraApplication\api\BaseAPI
         return uniqid();
     }
 
+    /**
+     * @param string[] $codes
+     *
+     * @return assets\Region[]
+     */
     public function getRegions($codes = array())
     {
         $return = array();

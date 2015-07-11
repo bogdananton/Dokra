@@ -1,7 +1,7 @@
 <?php
-namespace Dokra\assets;
+namespace Dokra\formats\PHP\Obj;
 
-class PHPSignature
+class Signature
 {
     public $raw;
     public $params = array();

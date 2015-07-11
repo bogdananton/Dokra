@@ -6,10 +6,10 @@
       "php": ">=5.5.0"
     },
     "require-dev": {
-      "mockery/mockery": "*",
+      "mockery/mockery": "0.9.*",
       "satooshi/php-coveralls": "0.6.*",
-      "phpunit/phpunit": "*",
-      "codeclimate/php-test-reporter": "dev-master"
+      "phpunit/phpunit": "4.7.*",
+      "codeclimate/php-test-reporter": "0.*"
     },
     "autoload": {
         "psr-4": {

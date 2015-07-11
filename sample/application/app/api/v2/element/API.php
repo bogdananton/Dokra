@@ -1,11 +1,18 @@
 <?php
 namespace DokraApplication\api\v2\element;
 
+use DokraApplication\api\v2\element\assets\Region;
+
 class API extends \DokraApplication\api\BaseAPI
 {
+    /**
+     * @param string $code
+     *
+     * @return Region
+     */
     public function getRegion($code)
     {
-        $object = new assets\Region;
+        $object = new Region;
         $object->Name = 'Name ' . $code;
         $object->Code = $code;
         $object->Description = 'Description for ' . $code;
@@ -16,9 +23,14 @@ class API extends \DokraApplication\api\BaseAPI
         return $object;
     }
 
+    /**
+     * @param Region $region
+     *
+     * @return string
+     */
     public function addRegion($region)
     {
-        $object = new assets\Region();
+        $object = new Region();
         foreach ($region as $key => $value) {
             $object->{$key} = $value;
         }
@@ -28,6 +40,11 @@ class API extends \DokraApplication\api\BaseAPI
         return uniqid();
     }
 
+    /**
+     * @param Region $region
+     *
+     * @return bool
+     */
     public function deleteRegion($region)
     {
         // ...
@@ -35,6 +52,11 @@ class API extends \DokraApplication\api\BaseAPI
         return true;
     }
 
+    /**
+     * @param Region $region
+     *
+     * @return bool
+     */
     public function updateRegion($region)
     {
         // ...
@@ -42,6 +64,11 @@ class API extends \DokraApplication\api\BaseAPI
         return true;
     }
 
+    /**
+     * @param string[] $codes
+     *
+     * @return Region[]
+     */
     public function getRegions($codes = array())
     {
         $return = array();

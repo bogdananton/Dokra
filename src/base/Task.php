@@ -7,9 +7,10 @@ use Dokra\Application;
 abstract class Task
 {
     const SCAN_FILES = 'ScanFiles';
-    const PROCESS_INTERFACES = 'ProcessInterfaces';
+    const IMPORT_INTERFACES = 'ImportInterfaces';
     const OUTPUT_CACHE = 'OutputCache';
     const DIFF_WSDL = 'DiffWsdl';
+    const CONVERT_PHP_TO_WSDL = 'ConvertPhpToWsdl';
 
     /**
      * @param string $task

@@ -44,59 +44,57 @@ EOF;
 EOF;
     }
 
-//    /**
-//     * When no class definition is found in text then return empty object.
-//     */
-//    public function testWhenNoClassDefinitionIsFoundInTextThenReturnEmptyObject()
-//    {
-//        $response = Importer::getClassName($this->contents[0]);
-//
-//        static::assertNull($response->className);
-//        static::assertNull($response->extendsClass);
-//        static::assertNull($response->extendsAlias);
-//    }
-//
-//    /**
-//     * When class definition is found in contents then return class name in response.
-//     */
-//    public function testWhenClassDefinitionIsFoundInContentsThenReturnClassNameInResponse()
-//    {
-//        $response = Importer::getClassName($this->contents[1]);
-//        static::assertEquals('Region', $response->className);
-//    }
-//
-//    /**
-//     * When extends a class then get extended class name in response.
-//     */
-//    public function testWhenExtendsAClassThenGetExtendedClassNameInResponse()
-//    {
-//        $response = Importer::getClassName($this->contents[2]);
-//
-//        print_r($response);
-//
-//        static::assertEquals('Country', $response->className);
-//        static::assertEquals('CountryA', $response->extendsAlias);
-//    }
-//
-//    /**
-//     * When extends a class with namespaces then get extended class name in response.
-//     */
-//    public function testWhenExtendsAClassWithNamespacesThenGetExtendedClassNameInResponse()
-//    {
-//        $response = Importer::getClassName($this->contents[3]);
-//
-//        static::assertEquals('Country', $response->className);
-//        static::assertEquals('assets\CountryA', $response->extendsAlias);
-//    }
-//
-//    /**
-//     * When extends a class with root namespace then get extended class name in response.
-//     */
-//    public function testWhenExtendsAClassWithRootNamespaceThenGetExtendedClassNameInResponse()
-//    {
-//        $response = Importer::getClassName($this->contents[4]);
-//        static::assertEquals('\elements\assets\CountryA', $response->extendsAlias);
-//    }
+    /**
+     * When no class definition is found in text then return empty object.
+     */
+    public function testWhenNoClassDefinitionIsFoundInTextThenReturnEmptyObject()
+    {
+        $response = Importer::getClassDetails($this->contents[0]);
+
+        static::assertNull($response->className);
+        static::assertNull($response->extendsClass);
+        static::assertNull($response->extendsAlias);
+    }
+
+    /**
+     * When class definition is found in contents then return class name in response.
+     */
+    public function testWhenClassDefinitionIsFoundInContentsThenReturnClassNameInResponse()
+    {
+        $response = Importer::getClassDetails($this->contents[1]);
+        static::assertEquals('Region', $response->className);
+    }
+
+    /**
+     * When extends a class then get extended class name in response.
+     */
+    public function testWhenExtendsAClassThenGetExtendedClassNameInResponse()
+    {
+        $response = Importer::getClassDetails($this->contents[2]);
+
+        static::assertEquals('Country', $response->className);
+        static::assertEquals('CountryA', $response->extendsAlias);
+    }
+
+    /**
+     * When extends a class with namespaces then get extended class name in response.
+     */
+    public function testWhenExtendsAClassWithNamespacesThenGetExtendedClassNameInResponse()
+    {
+        $response = Importer::getClassDetails($this->contents[3]);
+
+        static::assertEquals('Country', $response->className);
+        static::assertEquals('assets\CountryA', $response->extendsAlias);
+    }
+
+    /**
+     * When extends a class with root namespace then get extended class name in response.
+     */
+    public function testWhenExtendsAClassWithRootNamespaceThenGetExtendedClassNameInResponse()
+    {
+        $response = Importer::getClassDetails($this->contents[4]);
+        static::assertEquals('\elements\assets\CountryA', $response->extendsAlias);
+    }
 
     /**
      * When has uses return entries.

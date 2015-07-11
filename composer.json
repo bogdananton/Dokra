@@ -8,7 +8,8 @@
     "require-dev": {
       "mockery/mockery": "*",
       "satooshi/php-coveralls": "dev-master",
-      "phpunit/phpunit": "*"
+      "phpunit/phpunit": "*",
+      "codeclimate/php-test-reporter": "dev-master"
     },
     "autoload": {
         "psr-4": {

@@ -1,1 +1,26 @@
-["\/projects\/Dokra\/sample\/tools-cli\/..\/application\/public\/index.php","\/projects\/Dokra\/sample\/tools-cli\/..\/application\/app\/Main.php","\/projects\/Dokra\/sample\/tools-cli\/..\/application\/app\/SoapServer.php","\/projects\/Dokra\/sample\/tools-cli\/..\/application\/app\/config\/routes.php","\/projects\/Dokra\/sample\/tools-cli\/..\/application\/app\/api\/BaseAPI.php","\/projects\/Dokra\/sample\/tools-cli\/..\/application\/app\/api\/v1\/element\/API.php","\/projects\/Dokra\/sample\/tools-cli\/..\/application\/app\/api\/v1\/element\/assets\/Region.php","\/projects\/Dokra\/sample\/tools-cli\/..\/application\/app\/api\/Handler.php","\/projects\/Dokra\/sample\/tools-cli\/..\/application\/app\/api\/v2\/element\/API.php","\/projects\/Dokra\/sample\/tools-cli\/..\/application\/app\/api\/v2\/element\/assets\/Region.php","\/projects\/Dokra\/sample\/tools-cli\/..\/application\/app\/api\/v2\/element\/assets\/Basic.php","\/projects\/Dokra\/sample\/tools-cli\/..\/application\/app\/views\/soap-rpc\/element\/element-2.0.wsdl","\/projects\/Dokra\/sample\/tools-cli\/..\/application\/app\/views\/soap-rpc\/element\/element-1.0.wsdl","\/projects\/Dokra\/sample\/tools-cli\/..\/application\/app\/views\/soap-rpc\/user\/user-1.0.wsdl","\/projects\/Dokra\/sample\/tools-cli\/..\/application\/app\/controllers\/JsonController.php","\/projects\/Dokra\/sample\/tools-cli\/..\/application\/app\/controllers\/BaseController.php","\/projects\/Dokra\/sample\/tools-cli\/..\/application\/app\/controllers\/SoapController.php","\/projects\/Dokra\/sample\/tools-cli\/..\/application\/app\/JsonServer.php","\/projects\/Dokra\/sample\/tools-cli\/..\/application\/vendor\/autoload.php","\/projects\/Dokra\/sample\/tools-cli\/..\/application\/vendor\/composer\/autoload_psr4.php","\/projects\/Dokra\/sample\/tools-cli\/..\/application\/vendor\/composer\/autoload_real.php","\/projects\/Dokra\/sample\/tools-cli\/..\/application\/vendor\/composer\/ClassLoader.php","\/projects\/Dokra\/sample\/tools-cli\/..\/application\/vendor\/composer\/autoload_classmap.php","\/projects\/Dokra\/sample\/tools-cli\/..\/application\/vendor\/composer\/autoload_namespaces.php"]
+[
+    "\/projects\/Dokra\/sample\/tools-cli\/..\/application\/public\/index.php",
+    "\/projects\/Dokra\/sample\/tools-cli\/..\/application\/app\/Main.php",
+    "\/projects\/Dokra\/sample\/tools-cli\/..\/application\/app\/SoapServer.php",
+    "\/projects\/Dokra\/sample\/tools-cli\/..\/application\/app\/config\/routes.php",
+    "\/projects\/Dokra\/sample\/tools-cli\/..\/application\/app\/api\/BaseAPI.php",
+    "\/projects\/Dokra\/sample\/tools-cli\/..\/application\/app\/api\/v1\/element\/API.php",
+    "\/projects\/Dokra\/sample\/tools-cli\/..\/application\/app\/api\/v1\/element\/assets\/Region.php",
+    "\/projects\/Dokra\/sample\/tools-cli\/..\/application\/app\/api\/Handler.php",
+    "\/projects\/Dokra\/sample\/tools-cli\/..\/application\/app\/api\/v2\/element\/API.php",
+    "\/projects\/Dokra\/sample\/tools-cli\/..\/application\/app\/api\/v2\/element\/assets\/Region.php",
+    "\/projects\/Dokra\/sample\/tools-cli\/..\/application\/app\/api\/v2\/element\/assets\/Basic.php",
+    "\/projects\/Dokra\/sample\/tools-cli\/..\/application\/app\/views\/soap-rpc\/element\/element-2.0.wsdl",
+    "\/projects\/Dokra\/sample\/tools-cli\/..\/application\/app\/views\/soap-rpc\/element\/element-1.0.wsdl",
+    "\/projects\/Dokra\/sample\/tools-cli\/..\/application\/app\/views\/soap-rpc\/user\/user-1.0.wsdl",
+    "\/projects\/Dokra\/sample\/tools-cli\/..\/application\/app\/controllers\/JsonController.php",
+    "\/projects\/Dokra\/sample\/tools-cli\/..\/application\/app\/controllers\/BaseController.php",
+    "\/projects\/Dokra\/sample\/tools-cli\/..\/application\/app\/controllers\/SoapController.php",
+    "\/projects\/Dokra\/sample\/tools-cli\/..\/application\/app\/JsonServer.php",
+    "\/projects\/Dokra\/sample\/tools-cli\/..\/application\/vendor\/autoload.php",
+    "\/projects\/Dokra\/sample\/tools-cli\/..\/application\/vendor\/composer\/autoload_psr4.php",
+    "\/projects\/Dokra\/sample\/tools-cli\/..\/application\/vendor\/composer\/autoload_real.php",
+    "\/projects\/Dokra\/sample\/tools-cli\/..\/application\/vendor\/composer\/ClassLoader.php",
+    "\/projects\/Dokra\/sample\/tools-cli\/..\/application\/vendor\/composer\/autoload_classmap.php",
+    "\/projects\/Dokra\/sample\/tools-cli\/..\/application\/vendor\/composer\/autoload_namespaces.php"
+]

@@ -1,11 +1,11 @@
 <?php
 namespace Dokra\assets;
 
-use \Dokra\base\RegistryT;
+use \Dokra\base\Config;
 
 class PHPEntry
 {
-    use RegistryT;
+    use Config;
 
     public $filename;
     public $methods;

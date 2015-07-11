@@ -15,16 +15,27 @@ class Registry
     }
     
     public function set($key, $value) {
-        if (isset($this->registry[$key])) {
-            throw new \Exception("There is already an entry for key " . $key);
-        }
         $this->registry[$key] = $value;
     }
 
     public function get($key) {
-        if (!isset($this->registry[$key])) {
-            throw new \Exception("There is no entry for key " . $key);
+        if (!array_key_exists($key, $this->registry)) {
+            throw new \InvalidArgumentException(sprintf('Entry %s not set.', $key));
         }
         return $this->registry[$key];
+    }
+
+    public function delete($key)
+    {
+        if (!array_key_exists($key, $this->registry)) {
+            throw new \InvalidArgumentException(sprintf('Entry %s not set.', $key));
+        }
+
+        unset($this->registry[$key]);
+    }
+
+    public function reset()
+    {
+        $this->registry = [];
     }
 }

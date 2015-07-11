@@ -1,29 +1,23 @@
 <?php
-// @todo fill this with version differ and serialization differ
-
+date_default_timezone_set('Europe/Bucharest');
 $time = time() + microtime();
+
 require_once '../../vendor/autoload.php';
 
-$worker = new \Dokra\Application();
+use \Dokra\base\Task as TaskManager;
 
-$worker->config()->set('project.path', __DIR__ . '/../application');
-$worker->config()->set('cache.temporary', __DIR__ . '/../../cache');
+$app = new \Dokra\Application();
 
-$worker->config()->set('routing.regex.wsdl', [
-    '/\/soap-rpc\/([\w\-]+)\/([\w\-]+)\-([\d\.]+)\.wsdl$/' => ['endpoint', 'endpoint', 'version']
-]);
+$configuration = require_once 'configuration.php';
+$app->initConfig($configuration);
 
-$worker->config()->set('routing.transform.endpoint', [
-   ['_full', '']
-]);
+$app->addTask(TaskManager::SCAN_FILES);
+$app->addTask(TaskManager::PROCESS_INTERFACES);
+$app->addTask(TaskManager::OUTPUT_CACHE);
+$app->addTask(TaskManager::DIFF_WSDL);
 
-$worker->config()->set('routing.regex.php', [
-    '/\/v([\d\.]+)\/([\w]+)\/API.class.php$/' => ['version', 'endpoint']
-]);
+// @todo fill this with version differ and serialization differ
 
-$worker->registerTask('output.cache');
-$worker->registerTask('diff.wsdl');
-$worker->run();
+$app->run();
 
 echo "\n\nGenerated in " . number_format(time() + microtime() - $time, 2) . "s\n\n";
-

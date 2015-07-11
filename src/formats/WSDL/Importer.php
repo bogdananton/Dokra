@@ -2,9 +2,9 @@
 namespace Dokra\formats\WSDL;
 
 use Dokra\assets\APIFileEntry;
-use Dokra\assets\ImporterInterface;
+use Dokra\base\Importer as ImporterA;
 
-class Importer implements ImporterInterface
+class Importer extends ImporterA
 {
     const ID = 'wsdl';
     protected $xml;

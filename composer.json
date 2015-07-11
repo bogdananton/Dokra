@@ -3,11 +3,12 @@
     "description": "Documentation analyser and generator for WSDL.",
     "license": "MIT",
     "require": {
-      "php": ">=5.4.0"
+      "php": ">=5.5.0"
     },
     "require-dev": {
       "mockery/mockery": "*",
-      "satooshi/php-coveralls": "dev-master"
+      "satooshi/php-coveralls": "dev-master",
+      "phpunit/phpunit": "*"
     },
     "autoload": {
         "psr-4": {

@@ -2,10 +2,10 @@
 namespace Dokra\formats\PHP;
 
 use Dokra\assets\APIFileEntry;
-use Dokra\assets\ImporterInterface;
 use Dokra\assets\PHPEntry;
+use Dokra\base\Importer as ImporterA;
 
-class Importer implements ImporterInterface
+class Importer extends ImporterA
 {
     const ID = 'php';
 

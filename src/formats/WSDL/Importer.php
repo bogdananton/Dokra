@@ -6,9 +6,13 @@ use Dokra\base\Importer as ImporterA;
 
 class Importer extends ImporterA
 {
-    const ID = 'wsdl';
     protected $xml;
     protected $issues = [];
+
+    public function getId()
+    {
+        return 'wsdl';
+    }
 
     public function convertFile(APIFileEntry $interfaceFileEntry)
     {

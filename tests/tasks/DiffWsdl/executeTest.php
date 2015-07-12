@@ -42,8 +42,8 @@ class executeTest extends \PHPUnit_Framework_TestCase
         $versionChangesList->WSDL = $mockWSDLVersions;
 
         $storage = \Mockery::mock('FileStorage');
-        $storage->shouldReceive('store')->once()->with(Application::DIFF_WSDL_JSON, $getJSON);
-        $storage->shouldReceive('store')->once()->with(Application::DIFF_WSDL_HTML, $getHTML);
+        $storage->shouldReceive('set')->once()->with(Application::DIFF_WSDL_JSON, $getJSON);
+        $storage->shouldReceive('set')->once()->with(Application::DIFF_WSDL_HTML, $getHTML);
 
         $app->setConfig(Application::STORAGE, $storage);
 

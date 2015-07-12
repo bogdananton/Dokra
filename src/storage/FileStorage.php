@@ -10,61 +10,57 @@ class FileStorage
 
     protected $cacheFolder;
 
-    public function getPath($file)
+    public function path($filename)
     {
-        if (is_null($this->cacheFolder)) {
+        if (null === $this->cacheFolder) {
             $this->cacheFolder = $this->getConfig(Application::CACHE_TEMPORARY);
         }
-
-        return $this->cacheFolder . '/' . $file;
+        return implode(DIRECTORY_SEPARATOR, [$this->cacheFolder, $filename]);
     }
 
-    public static function getExtension($filePath)
+    public static function extension($filePath)
     {
-        return strtolower(substr($filePath, strrpos($filePath, '.') + 1));
+        if (is_string($filePath)) {
+            $response = pathinfo($filePath, PATHINFO_EXTENSION);
+            return $response ? strtolower($response) : null;
+        }
     }
 
-    public function getFiles($path, array $extensions = ['php', 'wsdl'])
+    public function files($path, array $extensions = ['php', 'wsdl'])
     {
-        $file = 'cache.files.json';
-        $filePath = $this->getPath($file);
+        $key = implode('.', [
+            Application::CACHE_FILES_JSON,
+            implode('-', $extensions),
+            md5($path),
+            'json'
+        ]);
 
-        if (file_exists($filePath)) {
-            return json_decode(file_get_contents($filePath));
+        $existingFiles = $this->get($key);
+        if ($existingFiles && count($existingFiles) > 0) {
+            return $existingFiles;
         }
 
-        $pattern = '/^.+\.(' . implode('|', $extensions) . ')$/i';
+        $Regex = new \RegexIterator(
+            new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path)),
+            '/^.+\.(' . implode('|', $extensions) . ')$/i',
+            \RecursiveRegexIterator::GET_MATCH
+        );
 
-        $Directory = new \RecursiveDirectoryIterator($path);
-        $Iterator = new \RecursiveIteratorIterator($Directory);
-        $Regex = new \RegexIterator($Iterator, $pattern, \RecursiveRegexIterator::GET_MATCH);
-
-        $response = array_keys(iterator_to_array($Regex));
-
-        $this->store($file, $response);
-        return $response;
+        return $this->set($key, array_keys(iterator_to_array($Regex)));
     }
 
     public function get($filename)
     {
-        if (file_exists($filename)) {
-            $filePath = $filename;
-        } else {
-            $filePath = $this->getPath($filename);
-        }
+        $filePath = file_exists($filename) ? $filename : $this->path($filename);
 
         if (file_exists($filePath)) {
             $contents = file_get_contents($filePath);
             $decoded = json_decode($contents);
-            if ($decoded) {
-                return $decoded;
-            } else {
-                return $contents;
-            }
+            return ($decoded || is_array($decoded)) ? $decoded : $contents;
         }
     }
 
-    public function store($filename, $data)
+    public function set($filename, $data)
     {
         switch (true) {
             case is_array($data):
@@ -76,6 +72,9 @@ class FileStorage
                 break;
         }
 
-        file_put_contents($this->getPath($filename), $contents);
+        $filePath = $this->path($filename);
+        file_put_contents($filePath, $contents);
+
+        return $data;
     }
 }

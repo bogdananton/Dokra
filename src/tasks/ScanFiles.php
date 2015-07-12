@@ -14,10 +14,10 @@ class ScanFiles extends Task
     public function execute(Application $app)
     {
         $projectPath = $this->getProjectPath();
-        $files = $this->getStorage()->getFiles($projectPath);
+        $files = $this->getStorage()->files($projectPath);
 
         if (count($files) === 0) {
-            throw new SetupException(sprintf('No files were found, is this the right path [%s]?', $projectPath));
+            throw new SetupException(sprintf($projectPath. 'No files were found, is this the right path [%s]?', $projectPath));
         }
 
         $this->setProjectFiles($files);

@@ -11,9 +11,12 @@ class Importer extends ImporterA
 {
     use Config;
 
-    const ID = 'php';
-
     protected static $errors = [];
+
+    public function getId()
+    {
+        return 'php';
+    }
 
     public static function getErrors()
     {

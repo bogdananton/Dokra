@@ -17,7 +17,7 @@ class runTest extends \PHPUnit_Framework_TestCase
     public function testWhenNoTaskIsQueuedThenReturnFalse()
     {
         $app = new Application();
-        $this->assertFalse($app->run());
+        static::assertFalse($app->run());
     }
 
     /**
@@ -27,12 +27,12 @@ class runTest extends \PHPUnit_Framework_TestCase
     {
         /** @var Application|\Mockery\Mock $app */
         $app = \Mockery::mock(Application::class)->makePartial();
-        $app->setConfig(Application::PROJECT_PATH, __DIR__ . '/../../');
-        $app->setConfig(Application::CACHE_TEMPORARY, __DIR__ . '/../../cache/');
+        $app->setConfig(Application::PROJECT_PATH, realpath(__DIR__ . '/../../sample/application'));
+        $app->setConfig(Application::CACHE_TEMPORARY, realpath(__DIR__ . '/../../cache'));
 
         $app->addTask(Task::SCAN_FILES);
         $response = $app->run();
 
-        $this->assertTrue($response);
+        static::assertTrue($response);
     }
 }

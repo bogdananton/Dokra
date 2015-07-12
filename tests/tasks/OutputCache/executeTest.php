@@ -28,7 +28,7 @@ class executeTest extends \PHPUnit_Framework_TestCase
         $interfaces = $app->getConfig(Application::INTERFACES);
 
         $storage = \Mockery::mock(FileStorage::class)->makePartial();
-        $storage->shouldReceive('store')->once()->with(Application::STRUCTURE_WSDL_JSON, $interfaces);
+        $storage->shouldReceive('set')->once()->with(Application::STRUCTURE_WSDL_JSON, $interfaces);
 
         $app->setConfig(Application::STORAGE, $storage);
 

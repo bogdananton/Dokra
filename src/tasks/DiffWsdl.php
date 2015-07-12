@@ -24,8 +24,8 @@ class DiffWsdl extends Task
         /** @var VersionChanges $differWSDL */
         $WSDL->from($interfaces->WSDL)->run();
 
-        $app->getStorage()->store(Application::DIFF_WSDL_JSON, $WSDL->getJSON());
-        $app->getStorage()->store(Application::DIFF_WSDL_HTML, $WSDL->getHTML());
+        $app->getStorage()->set(Application::DIFF_WSDL_JSON, $WSDL->getJSON());
+        $app->getStorage()->set(Application::DIFF_WSDL_HTML, $WSDL->getHTML());
 
         return true;
     }

@@ -20,5 +20,10 @@ abstract class Importer
         return $response;
     }
 
-    abstract function convertFile(APIFileEntry $interfaceFileEntry);
+    /**
+     * @return string Importer identifier, lowercase extension / format.
+     */
+    abstract public function getId();
+
+    abstract public function convertFile(APIFileEntry $interfaceFileEntry);
 }

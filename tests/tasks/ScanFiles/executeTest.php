@@ -41,7 +41,7 @@ class executeTest extends \PHPUnit_Framework_TestCase
         $applicationPath = '/project/Dokra/sample/application';
 
         $storage = \Mockery::mock('FileStorage')->makePartial();
-        $storage->shouldReceive('getFiles')->with($applicationPath)->once()->andReturn([]);
+        $storage->shouldReceive('files')->with($applicationPath)->once()->andReturn([]);
 
         /** @var \Dokra\Application $app */
         $app = \Mockery::mock(Application::class)->makePartial();
@@ -61,7 +61,7 @@ class executeTest extends \PHPUnit_Framework_TestCase
         $applicationPath = '/project/Dokra/sample/application';
 
         $storage = \Mockery::mock('FileStorage')->makePartial();
-        $storage->shouldReceive('getFiles')
+        $storage->shouldReceive('files')
             ->with($applicationPath)
             ->once()
             ->andReturn($extractedFiles);

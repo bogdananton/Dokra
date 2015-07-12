@@ -13,7 +13,7 @@ class OutputCache extends Task
     public function execute(Application $app)
     {
         $interfaces = $this->getConfig(Application::INTERFACES);
-        $this->getStorage()->store(Application::STRUCTURE_WSDL_JSON, $interfaces);
+        $this->getStorage()->set(Application::STRUCTURE_WSDL_JSON, $interfaces);
         return true;
     }
 }

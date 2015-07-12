@@ -26,6 +26,7 @@ class Application
     const STRUCTURE_WSDL_JSON = 'structure.wsdl.json';
     const DIFF_WSDL_JSON = 'diff.wsdl.json';
     const DIFF_WSDL_HTML = 'diff.wsdl.html';
+    const CACHE_FILES_JSON = 'cache.files.json';
 
     use Config;
 

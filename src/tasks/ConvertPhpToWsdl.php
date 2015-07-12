@@ -24,7 +24,7 @@ class ConvertPhpToWsdl extends Task
         $item = $this->getConfig(Application::FLASH_STORAGE_TASK);
 
         $file = 'php2wsdl-endpoint[' . $item->source->endpoint . ']-version[' . $item->source->version . '].json';
-        $this->getStorage()->store($file, $item);
+        $this->getStorage()->set($file, $item);
 
         // @todo create exporter
     }

@@ -46,7 +46,10 @@ class FileStorage
             \RecursiveRegexIterator::GET_MATCH
         );
 
-        return $this->set($key, array_keys(iterator_to_array($Regex)));
+        $files = array_keys(iterator_to_array($Regex));
+        sort($files);
+
+        return $this->set($key, $files);
     }
 
     public function get($filename)

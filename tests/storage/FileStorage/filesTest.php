@@ -64,6 +64,8 @@ class filesTest extends \PHPUnit_Framework_TestCase
             $appPath . '/app/views/soap-rpc/user/user-1.0.wsdl'
         ];
 
+        sort($expected);
+
         $key = Application::CACHE_FILES_JSON . '.wsdl.' . md5($appPath) . '.json';
         $cacheFilePath = $cachePath . '/' . $key;
 

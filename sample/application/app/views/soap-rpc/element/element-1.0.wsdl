@@ -60,6 +60,7 @@
    <message name="getRegionsRequest">
       <part name="Hash" type="xsd:string"/>
       <part name="Codes" type="typens:StringArray"/>
+      <part name="Language" type="xsd:string" nillable="true" />
    </message>
 
    <message name="getRegionsResponse">

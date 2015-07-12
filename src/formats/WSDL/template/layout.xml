@@ -1,0 +1,31 @@
+<definitions
+        name="<?=$endpointCode?>"
+        targetNamespace="<?=$endpointCode?>"
+        xmlns:typens="<?=$endpointCode?>"
+        xmlns="http://schemas.xmlsoap.org/wsdl/"
+        xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+        xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+        xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+    <types>
+        <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:<?=$endpointCode?>">
+            <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+            <?=PHP_EOL . $complexTypeList . PHP_EOL?>
+        </xsd:schema>
+    </types>
+    <?=PHP_EOL . $messageList . PHP_EOL?>
+
+    <portType name="<?=$endpointName?>PortType"><?=PHP_EOL?><?=$operationMessageList?><?=PHP_EOL?>    </portType>
+
+    <binding name="<?=$endpointName?>Binding" type="typens:<?=$endpointName?>PortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <?=PHP_EOL . $operationBindingsList?>    </binding>
+
+    <service name="<?=$endpointName?>Service">
+        <documentation>WSDL File for <?=$endpointName?>s</documentation>
+        <port binding="typens:<?=$endpointName?>Binding" name="<?=$endpointName?>Port">
+            <soap:address location="<?=$location?>" />
+        </port>
+    </service>
+</definitions>

@@ -7,6 +7,7 @@ use Dokra\base\Config;
 use Dokra\base\Task;
 use Dokra\exceptions\ContentException;
 use Dokra\formats\PHP\Importer;
+use Dokra\formats\WSDL\Exporter;
 
 class ConvertPhpToWsdl extends Task
 {
@@ -16,16 +17,35 @@ class ConvertPhpToWsdl extends Task
     {
         $importerErrors = Importer::getErrors();
 
-        if (!empty($importerErrors)) {
+        if (count($importerErrors) > 0) {
             $importerErrors = array_unique($importerErrors);
             throw new ContentException(implode(PHP_EOL, $importerErrors));
         }
 
+        try {
+            $this->processInterface($this->currentInterface());
+
+        } catch (\Exception $e) {
+            throw new ContentException('Can\'t find the requested endpoint. ' . $e->getMessage());
+        }
+    }
+
+    protected function currentInterface()
+    {
         $item = $this->getConfig(Application::FLASH_STORAGE_TASK);
 
-        $file = 'php2wsdl-endpoint[' . $item->source->endpoint . ']-version[' . $item->source->version . '].json';
+        $e = $item->source->endpoint;
+        $v = $item->source->version;
+
+        $file = sprintf(Application::WSDL_ENDPOINT_OUTPUT, $e, $v, 'temporary.json');
         $this->getStorage()->set($file, $item);
 
-        // @todo create exporter
+        return $item;
+    }
+
+    protected function processInterface($item)
+    {
+        $exporter = new Exporter();
+        $exporter->fromPHP($item)->run();
     }
 }

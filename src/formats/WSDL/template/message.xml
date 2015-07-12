@@ -1,0 +1,3 @@
+    <message name="<?=$messageType?>">
+        <?=$partList . PHP_EOL?>
+    </message>

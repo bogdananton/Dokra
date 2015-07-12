@@ -1,0 +1,5 @@
+            <xsd:complexType <?=((isset($abstract) && $abstract) ? 'abstract="true"' : '')?> name="<?=$label?>">
+                <xsd:sequence>
+                    <?=$elementList?>
+                </xsd:sequence>
+            </xsd:complexType>

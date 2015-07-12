@@ -1,0 +1,4 @@
+        <operation name="<?=$name?>">
+            <input message="typens:<?=$name?>Request"/>
+            <output message="typens:<?=$name?>Response"/>
+        </operation>

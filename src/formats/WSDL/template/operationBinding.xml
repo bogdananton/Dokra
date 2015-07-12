@@ -1,0 +1,5 @@
+        <operation name="<?=$name?>">
+            <soap:operation soapAction="<?=$name?>"/>
+            <input><soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:<?=$endpointCode?>" use="encoded"/></input>
+            <output><soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:<?=$endpointCode?>" use="encoded"/></output>
+        </operation>

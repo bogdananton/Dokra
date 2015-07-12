@@ -16,6 +16,9 @@ $app->initConfig($configuration);
 // Useful when the process fails because of custom autoloader or complex loading logic.
 $app->setConfig(Application::FLAG_USE_REFLECTION, true);
 
+// @todo make the route elements dynamic (use "{$version}" format)
+$app->setConfig(Application::WSDL_ENDPOINT_URL_LOCATION, 'http://application-url.com/soap/%s/v%s');
+
 $app->addTask(TaskManager::SCAN_FILES);
 $app->addTask(TaskManager::IMPORT_INTERFACES);
 $app->addTask(TaskManager::OUTPUT_CACHE);
@@ -24,6 +27,7 @@ $app->run();
 
 $interfaces = [];
 
+// choose the target to be converted
 $desiredVersion = '1';
 $endpoint = 'element';
 

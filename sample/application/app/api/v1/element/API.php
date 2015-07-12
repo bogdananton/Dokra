@@ -39,10 +39,11 @@ class API extends \DokraApplication\api\BaseAPI
 
     /**
      * @param string[] $codes
+     * @param string $Language
      *
      * @return assets\Region[]
      */
-    public function getRegions($codes = array())
+    public function getRegions($codes = array(), $Language = 'en')
     {
         $return = array();
 

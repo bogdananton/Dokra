@@ -310,6 +310,11 @@
                         "type": "StringArray",
                         "isBasic": false,
                         "isNull": false
+                    },
+                    "Language": {
+                        "type": "string",
+                        "isBasic": true,
+                        "isNull": false
                     }
                 },
                 "getRegionsResponse": {
@@ -583,21 +588,23 @@
                         }
                     },
                     {
-                        "line": 44,
+                        "line": 45,
                         "method": "getRegions",
                         "rawDocblock": [
                             "\/**",
                             "* @param string[] $codes",
+                            "* @param string $Language",
                             "*",
                             "* @return assets\\Region[]",
                             "*\/",
-                            "public function getRegions($codes = array())"
+                            "public function getRegions($codes = array(), $Language = 'en')"
                         ],
                         "processed": {
                             "Signature": {
-                                "raw": "$codes = array()",
+                                "raw": "$codes = array(), $Language = 'en'",
                                 "params": {
-                                    "codes": "array()"
+                                    "codes": "array()",
+                                    "Language": "'en'"
                                 }
                             },
                             "Documentation": "",
@@ -660,6 +667,13 @@
                                     "details": null,
                                     "default": "array()",
                                     "isArray": true
+                                },
+                                {
+                                    "type": "string",
+                                    "name": "Language",
+                                    "details": null,
+                                    "default": "'en'",
+                                    "isArray": false
                                 }
                             ]
                         }

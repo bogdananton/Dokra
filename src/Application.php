@@ -27,6 +27,8 @@ class Application
     const DIFF_WSDL_JSON = 'diff.wsdl.json';
     const DIFF_WSDL_HTML = 'diff.wsdl.html';
     const CACHE_FILES_JSON = 'cache.files.json';
+    const WSDL_ENDPOINT_OUTPUT = 'php2wsdl-endpoint[%s]-version[%s].%s';
+    const WSDL_ENDPOINT_URL_LOCATION = 'wsd.endpoint.url.location';
 
     use Config;
 

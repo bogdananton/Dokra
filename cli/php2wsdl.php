@@ -2,7 +2,7 @@
 date_default_timezone_set('Europe/Bucharest');
 $time = time() + microtime();
 
-require_once '../../vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 use \Dokra\base\Task as TaskManager;
 use \Dokra\Application;

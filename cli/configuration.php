@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'project.path' => __DIR__ . '/../application',
-    'cache.temporary' => __DIR__ . '/../../cache',
+    'project.path' => __DIR__ . '/../sample/application',
+    'cache.temporary' => __DIR__ . '/../cache',
 
     'routing.regex.wsdl' => [
         '/\/soap-rpc\/([\w\-]+)\/([\w\-]+)\-([\d\.]+)\.wsdl$/' => ['endpoint', 'endpoint', 'version']

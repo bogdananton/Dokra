@@ -1,12 +1,12 @@
 {
     "source": {
         "type": "PHP",
-        "filePath": "\/projects\/Dokra\/sample\/tools-cli\/..\/application\/app\/api\/v1\/element\/API.php",
+        "filePath": "\/projects\/Dokra\/cli\/..\/sample\/application\/app\/api\/v1\/element\/API.php",
         "version": "1",
         "endpoint": "element"
     },
     "entry": {
-        "filename": "\/projects\/Dokra\/sample\/tools-cli\/..\/application\/app\/api\/v1\/element\/API.php",
+        "filename": "\/projects\/Dokra\/cli\/..\/sample\/application\/app\/api\/v1\/element\/API.php",
         "methods": [
             {
                 "line": 10,

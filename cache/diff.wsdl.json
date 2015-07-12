@@ -168,6 +168,27 @@
                             }
                         ]
                     }
+                ],
+                "getRegions": [
+                    {
+                        "messageType": "input",
+                        "changeType": "different parameter count",
+                        "current": [
+                            "Hash",
+                            "Codes"
+                        ],
+                        "previous": [
+                            "Hash",
+                            "Codes",
+                            "Language"
+                        ],
+                        "backwardsCompatible": 0,
+                        "added": [],
+                        "removed": {
+                            "2": "Language"
+                        },
+                        "diffParameterStructure": false
+                    }
                 ]
             }
         }
